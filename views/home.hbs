@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>{{data.username}}</title>
+</head>
+
+
+
+<style>
+html{
+  height:100%;
+}
+body{
+  background-color:black;
+  height:100%;
+
+}
+.playlist{
+  position:absolute;
+  height:100%;
+  top: 50%;
+  left: 50%;
+  margin-right:-50%;
+  transform: translate(-50%, -50%) 
+}
+
+.addVideo{
+  background-color:black;
+  color:white;
+  font-family:Geneva;
+}
+#font{
+  font-size:smaller;
+  opacity: 0.3; 
+}
+
+.video{
+  margin-top:20%;
+  {{!-- margin-bottom:15%; --}}
+}
+
+.deletionIndicator{
+  visibility: hidden;
+
+}
+
+#background-video{
+  position:fixed;
+  right:0;
+  bottom:0;
+  min-width:100%;
+  min-height:100%;
+  opacity: 0.8;
+}
+
+ 
+
+
+</style>
+
+<div>
+  <form method="POST" action={{data.username}}>
+  <input class="addVideo" id="font" type="text" name="link" value=""></input>
+  <button class="addVideo" id="font" type="submit">+</button>
+  </form>
+<div>
+
+<div><button class="addVideo" id="font" onclick="hideBoxes()">-</button></div>
+
+<body>
+{{!-- <video autoplay muted loop id="background-video" source src="../Turntable - 8453.mp4" type="video/mp4"></video> --}}
+{{!-- <img src="../abstract-1780129_1920.png" id="background-video"> --}}
+<div>
+  <form method="GET" action={{data.username}}>
+  <div class="playlist">{{{playlist}}}</div>
+  <button class="addVideo" id="font" type="submit">Remove Videos</button>
+  </form>
+</div>
+</body>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="index.js"></script>
+  <script type="text/javascript" src="../home.js"></script>
+  <script type="text/javascript" src="../deleteVideos.js"></script>
+
+<footer>
+</footer>
+</html>
+

@@ -31,6 +31,12 @@ const UserSchema=mongoose.Schema({
     trim:true, //removes trailing spaces
     index:{unique:true},//ensures uniqueness
     minlength:8,
+  },
+
+  videos:{
+    type:Object,
+    required:false,
+    index:{unique:true},
   }
 },
 {
