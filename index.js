@@ -16,7 +16,7 @@ var app = express();
 var variable=[];
 var videos=[];
 playlist=[];
-var HTTP_PORT = process.env.PORT || 8080;
+var HTTP_PORT = process.env.PORT || 5000;
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
@@ -34,6 +34,12 @@ function onHttpStart() {
 app.engine('.hbs',hbstempl({extname:'.hbs'}))
 app.set('view engine','.hbs');
 
+
+app.get('/',(req,res,next)=>{
+  res.render('index',{layout:false});
+});
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.unsubscribe(cookieParser());
 app.use(express.static(__dirname))
@@ -48,10 +54,6 @@ app.use(session({
   saveUninitialized:false,//to avoid getting empty objects in db
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }))
-
-app.get('/',(req,res,next)=>{
-  res.render('index',{layout:false});
-});
 
 
 app.get('/login',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
