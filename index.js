@@ -10,13 +10,14 @@ const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
 
+
 // const config=require('./config')[process.env.NODE_ENV || 'development'];
 const db=require('./lib/db')
 var app = express();
 var variable=[];
 var videos=[];
-playlist=[];
-var HTTP_PORT = process.env.PORT;
+var playlist=[];
+var HTTP_PORT = process.env.PORT || 8080;
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
@@ -84,45 +85,47 @@ app.get('/home/:username',(req,res)=>{
 
   if (loggedInUser===req.params.username) {
 
-  //store user data in variable.
+  //update data
+      if(req.query && req.query.selectedVideos){
 
-  if(req.query && req.query.selectedVideos){
+      console.log("query route hit");
+      console.log(req.query.selectedVideos);
 
-  console.log("query route hit");
-  console.log(req.query.selectedVideos);
+      if(typeof req.query.selectedVideos === 'object'){
 
-  if(typeof req.query.selectedVideos === 'object'){
-
-  req.query.selectedVideos.forEach(function find(video){
-  console.log("this is one video" + video);
-  UserModel.findOneAndUpdate(
-    {username:req.params.username},
-    {$pull:{videos:{"0":video}}},
-    function(err) {
-      if(err){
-      console.log(err);
-      }else{
-      console.log("deleted")
-      }
-    }
-  )})
-
-  } else {
-
-    UserModel.findOneAndUpdate(
-      {username:req.params.username},
-      {$pull:{videos:{"0":req.query.selectedVideos}}},
-      function(err) {
-        if(err){
-        console.log(err);
-        }else{
-        console.log("deleted")
+      req.query.selectedVideos.forEach(function find(video){
+      console.log("this is one video" + video);
+      UserModel.findOneAndUpdate(
+        {username:req.params.username},
+        {$pull:{videos:{"0":video}}},
+        function(err) {
+          if(err){
+          console.log(err);
+          }else{
+          console.log("deleted")
+          }
         }
-      }
-    )
+      )})
 
-  }
-  }
+      } else {
+
+        UserModel.findOneAndUpdate(
+          {username:req.params.username},
+          {$pull:{videos:{"0":req.query.selectedVideos}}},
+          function(err) {
+            if(err){
+            console.log(err);
+            }else{
+            console.log("deleted")
+            }
+          }
+        )
+
+      }
+
+      return res.redirect('/home/' + req.params.username);
+
+      }
 
   UserModel.find({ username:req.params.username },function(err, user) {
     
