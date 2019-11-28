@@ -9,12 +9,54 @@
 
 
 <style>
+
 html{
   height:100%;
 }
+
+.logoutLink{
+  position:fixed;
+  top:0;
+  right:1pc;
+  color:white;
+  opacity: 0.3;
+}
+
+.logoutLink:hover{
+  color:white;
+  font-weight:bolder;
+}
+
+.addInputBox{
+  position:fixed;
+  top:30;
+  margin-left:1pc;
+}
+
+.addButton{
+  position:fixed;
+  top:30;
+  margin-left:210px;
+}
+
+.removeButton{
+  position:fixed;
+  top:30;
+  right:0;
+  margin-right:50px;
+}
+.removeBoxes{
+  position:fixed;
+  top:30;
+  right:0;
+  margin-right:1pc;
+}
+
+
 body{
   background-color:black;
   height:100%;
+  margin-top:30px;
 
 }
 .playlist{
@@ -38,44 +80,33 @@ body{
 
 .video{
   margin-top:20%;
-  {{!-- margin-bottom:15%; --}}
+  margin-bottom:10%;
 }
 
 .deletionIndicator{
   visibility: hidden;
-
 }
-
-#background-video{
-  position:fixed;
-  right:0;
-  bottom:0;
-  min-width:100%;
-  min-height:100%;
-  opacity: 0.8;
-}
-
- 
-
 
 </style>
 
 <div>
   <form method="POST" action={{data.username}}>
-  <input class="addVideo" id="font" type="text" name="link" value=""></input>
-  <button class="addVideo" id="font" type="submit">+</button>
+    <input class="addVideo addInputBox" id="font" type="text" name="link" value=""></input>
+    <button class="addVideo addButton" id="font" type="submit">+</button>
   </form>
 <div>
 
-<div><button class="addVideo" id="font" onclick="hideBoxes()">-</button></div>
+
 
 <body>
 {{!-- <video autoplay muted loop id="background-video" source src="../Turntable - 8453.mp4" type="video/mp4"></video> --}}
 {{!-- <img src="../abstract-1780129_1920.png" id="background-video"> --}}
 <div>
+  <div><a  class="logoutLink" href="/logout">Logout</a></div>
+  <div><button class="addVideo removeBoxes" id="font" onclick="displayBoxes()">-</button></div>
   <form method="GET" action={{data.username}}>
   <div class="playlist">{{{playlist}}}</div>
-  <button class="addVideo" id="font" type="submit">Remove Videos</button>
+  <button class="addVideo removeButton" id="font" value="submit">Remove Videos</button>
   </form>
 </div>
 </body>
@@ -85,7 +116,6 @@ body{
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="index.js"></script>
   <script type="text/javascript" src="../home.js"></script>
-  <script type="text/javascript" src="../deleteVideos.js"></script>
 
 <footer>
 </footer>

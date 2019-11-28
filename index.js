@@ -1,4 +1,5 @@
-var express = require("express");
+const express = require("express");
+const createError=require('http-errors');
 const passport = require('passport');
 const UserModel=require('./UserModel');
 const bodyParser = require('body-parser');
@@ -8,7 +9,6 @@ const MongoStore=require('connect-mongo')(session);
 const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
-var methods=require('./home');
 
 // const config=require('./config')[process.env.NODE_ENV || 'development'];
 const db=require('./lib/db')
@@ -17,7 +17,7 @@ var variable=[];
 var videos=[];
 playlist=[];
 var HTTP_PORT = process.env.PORT || 8080;
-
+var loggedInUser;
 // call this function after the http server starts listening for requests
 
 function onHttpStart() {
@@ -42,10 +42,24 @@ app.use(auth.initialize)
 app.use(auth.session);
 app.use(auth.setUser);
 
+app.use(session({
+  secret:'very secret', //sign the sessions to prevent tamperings
+  resave: true,//if wans't changed, stays active
+  saveUninitialized:false,//to avoid getting empty objects in db
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}))
+
+app.get('/',(req,res,next)=>{
+  res.render('index',{layout:false});
+});
+
+
+app.get('/login',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
 
 app.post('/login',
   passport.authenticate('local'),
   function(req, res) {
+    loggedInUser=req.user.username;
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     res.redirect('/home/' + req.user.username);
@@ -54,18 +68,19 @@ app.post('/login',
 );
 
 
-app.get('/login',(req,res)=>{res.render('/',{error:req.query.error})});
 
 
-app.use(session({
-  secret:'very secret', //sign the sessions to prevent tamperings
-  resave: true,//if wans't changed, stays active
-  saveUninitialized:false,//to avoid getting empty objects in db
-  store: new MongoStore({mongooseConnection: mongoose.connection})
-}))
+app.get('/logout',(req,res)=>{
+  //passport automatically add function logout to req object. simple call it. It will clear the login session
+  req.logout();
+  loggedInUser="";
+  return res.redirect('/');
 
+})
 
-app.get('/home/:username',(req,res,next)=>{
+app.get('/home/:username',(req,res)=>{
+
+  if (loggedInUser===req.params.username) {
 
   //store user data in variable.
 
@@ -117,13 +132,6 @@ app.get('/home/:username',(req,res,next)=>{
     if(user[0]){
     var data=JSON.parse(JSON.stringify(user[0]))
 
-    function getSrc(link){
-      let sliceFrom=link.indexOf("youtube")
-      let sliceTo=link.indexOf("frameborder");
-      uniqueCode=link.slice(sliceFrom,sliceTo);
-      return uniqueCode;
-    }
-
     function addToArray(item){
       videos.push(item);
     }
@@ -140,6 +148,11 @@ app.get('/home/:username',(req,res,next)=>{
   }
   res.render('home',{playlist:playlist, data:variable,layout:false});
   })
+
+  } else {
+    res.redirect("/"); 
+  }
+
 })
 
 
@@ -160,57 +173,10 @@ app.post('/home/:username',(req,res,next)=>{
         }
     }
   );
-  // if(req.body.selectedVideos){
-
-  // UserModel.findOneAndRemove(
-  //       {username:req.params.username},
-  //       {$pull:{videos:{"0":req.body.selectedVideos}}},
-  //       {useFindAndModify:false},
-  //       function(err, doc) {
-  //         if(err){
-  //         console.log(err);
-  //         }else{
-  //         console.log("deleted")
-  //         console.log(req.body.selectedVideos);
-  //         return res.redirect('/home/' + req.params.username);
-  //         }
-  //       }
-  // )
-  // }
+  
 })
 
-
-// app.get('/home/:username',(req,res,next)=>{
-
-//   console.log("delete route hit")
-
-//   console.log(req.body.selectedVideos);
-
-//   UserModel.findOneAndRemove(
-//     {username:req.params.username},
-//     {$pull:{videos:{"0":req.body.selectedVideos}}},
-//     {useFindAndModify:false},
-//     function(err, doc) {
-//       if(err){
-//       console.log(err);
-//       }else{
-//       console.log("deleted")
-//       console.log(req.body.selectedVideos);
-//       return res.redirect('/home/' + req.params.username);
-//       }
-//     }
-// )
-// })
-
-
-
-
-app.get('/',(req,res,next)=>{
-  res.sendFile('index.html',{root:__dirname});
-});
-
-
-app.post('/home',(req,res,next)=>{
+app.post('/home',(req,res)=>{
 
 res.sendFile('home.html',{root:__dirname})
 
@@ -239,18 +205,17 @@ app.post('/registration', async (req,res,next)=>{
 
 })
 
+//Error Page: if no other route matches...
+app.use((req,res,next)=>{
+  return next(createError(404,'File not found'))
+})
 
-// app.get('/home/:book',(req,res,next)=>{
-//   res.sendFile('home.html',{root:__dirname});
-// }); // how to pass down req.params.book to Script? (guessing where the filtering is going to happen)
-
-
-// setup a 'route' to listen on the default url path (http://localhost)
-// app.get("/", function(req,res){
-//     // res.send("Hello World");
-//     res.sendFile(path.join(__dirname,"./index.html"));
-// });
-
-
+app.use((err,req, res, next)=>{
+  // res.local.message=err.message;
+  // const status=err.status || 500;
+  // res.locals.status=status;
+  // res.status(status);
+  return res.render('error',{layout:false})
+})
 // setup http server to listen on HTTP_PORT
 app.listen(HTTP_PORT, onHttpStart);
