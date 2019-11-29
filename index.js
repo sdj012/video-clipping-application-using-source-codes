@@ -17,11 +17,7 @@ var app = express();
 var variable=[];
 var videos=[];
 var playlist=[];
-<<<<<<< HEAD
-var HTTP_PORT = process.env.PORT ||8080;
-=======
 var HTTP_PORT = process.env.PORT || 3000;
->>>>>>> 9df5d960cf9ae999e797aef9acbf65b9db1c8b5e
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
