@@ -17,7 +17,7 @@ var app = express();
 var variable=[];
 var videos=[];
 var playlist=[];
-var HTTP_PORT = process.env.PORT || 8080;
+var HTTP_PORT = process.env.PORT ||8080;
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
@@ -56,6 +56,9 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }))
 
+// app.get('/favicon.ico',(req,res)=>{
+//   res.redirect('/');
+// })
 
 app.get('/login',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
 
@@ -98,6 +101,7 @@ app.get('/home/:username',(req,res)=>{
       UserModel.findOneAndUpdate(
         {username:req.params.username},
         {$pull:{videos:{"0":video}}},
+        {useFindAndModify:false},
         function(err) {
           if(err){
           console.log(err);
@@ -112,6 +116,7 @@ app.get('/home/:username',(req,res)=>{
         UserModel.findOneAndUpdate(
           {username:req.params.username},
           {$pull:{videos:{"0":req.query.selectedVideos}}},
+          {useFindAndModify:false},
           function(err) {
             if(err){
             console.log(err);
@@ -125,10 +130,12 @@ app.get('/home/:username',(req,res)=>{
 
       return res.redirect('/home/' + req.params.username);
 
-      }
+    }
 
-  UserModel.find({ username:req.params.username },function(err, user) {
-    
+  UserModel.find(
+    {username:req.params.username },
+    function(err, user) {
+    console.log("loading videos")
     if (err) throw err;
     variable=user[0];
     videos=[];
@@ -142,7 +149,7 @@ app.get('/home/:username',(req,res)=>{
     }
 
     function addToPlaylist(item){
-      playlist.push("<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+item[0]+"'<br>"+ item[0] +"<br></div>");
+      playlist.push("<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+item[0]+"'><br>"+ item[0] +"<br></div>");
     };
 
 
@@ -151,6 +158,7 @@ app.get('/home/:username',(req,res)=>{
     videos.forEach(addToPlaylist);
     }
   }
+
   res.render('home',{playlist:playlist, data:variable,layout:false});
   })
 
