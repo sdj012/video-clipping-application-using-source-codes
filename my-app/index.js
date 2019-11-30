@@ -10,7 +10,8 @@ const MongoStore=require('connect-mongo')(session);
 const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
-const connectionString=process.env.MONGODB_CONNECTION_STRING;
+// const connectionString=process.env.MONGODB_CONNECTION_STRING;
+const connectionString=process.env.MONGODB_URI
 
 const db=require('../lib/db')
 var app = express();
