@@ -57,10 +57,12 @@ app.use(session({
 }))
 
 app.get('/favicon.ico',(req,res)=>{
-  res.redirect('/');
+  return res.redirect('/');
 })
 
-app.get('/',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
+app.get('/',(req,res)=>{
+  return res.render('index',{error:req.query.error,layout:false})
+});
 
 app.post('/',
   passport.authenticate('local'),
@@ -68,8 +70,8 @@ app.post('/',
     loggedInUser=req.user.username;
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.redirect('/home/' + req.user.username);
-  } 
+    return res.redirect('/home/' + req.user.username);
+  }
   // By default, if auth fails, pp will respond with a 401 status. 
 );
 
