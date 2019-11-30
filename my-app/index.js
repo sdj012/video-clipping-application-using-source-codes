@@ -1,3 +1,4 @@
+require('dotenv').config({path:'my-app/.env'});
 const express = require("express");
 const createError=require('http-errors');
 const passport = require('passport');
@@ -9,22 +10,20 @@ const MongoStore=require('connect-mongo')(session);
 const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
+const connectionString=process.env.MONGODB_CONNECTION_STRING;
 
-
-// const config=require('./config')[process.env.NODE_ENV || 'development'];
-const db=require('./lib/db')
+const db=require('../lib/db')
 var app = express();
 var variable=[];
 var videos=[];
 var playlist=[];
-var HTTP_PORT = process.env.PORT || '80';
+var HTTP_PORT = process.env.PORT || '8080';
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
 function onHttpStart() {
   console.log("Express http server listening on: " + HTTP_PORT);
-  // db.connect("mongodb+srv://dbUser:Daeun11Dance@cluster0-tjyzj.mongodb.net/shakespace?retryWrites=true&w=majority")
-  db.connect("mongodb+srv://dbUser:Daeun11Dance@cluster0-tjyzj.mongodb.net/shakespace?retryWrites=true&w=majority")
+  db.connect(connectionString)
   .then(() => {
     console.log('Connected to MongoDB');
   })
@@ -33,6 +32,7 @@ function onHttpStart() {
   });
 }
 app.engine('.hbs',hbstempl({extname:'.hbs'}))
+app.set('views',__dirname+'/views');
 app.set('view engine','.hbs');
 
 

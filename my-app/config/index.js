@@ -1,9 +1,8 @@
 require('dotenv').config //loads environment variables from a .env file into process.env
 
-
   // development:{
   //   sitename:'Shakespace [Development]',
-      // dbs:process.env.DEVELOPMENT_DB,
+  //     dbs:process.env.DEVELOPMENT_DB,
   // },
   // production:{
   //   sitename:'Shakespace',
@@ -21,6 +20,6 @@ require('dotenv').config //loads environment variables from a .env file into pro
 
 
   module.exports=()=>{
-    const dbs=process.env.DEVELOPMENT_DB
+    const dbs=process.env.MONGODB_CONNECTION_STRING
   }
 
