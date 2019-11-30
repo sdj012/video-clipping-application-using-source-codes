@@ -21,17 +21,17 @@ var HTTP_PORT = process.env.PORT || '80';
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
-function onHttpStart() {
-  console.log("Express http server listening on: " + HTTP_PORT);
-  // db.connect("mongodb+srv://dbUser:Daeun11Dance@cluster0-tjyzj.mongodb.net/shakespace?retryWrites=true&w=majority")
-  db.connect(MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-}
+// function onHttpStart() {
+//   console.log("Express http server listening on: " + HTTP_PORT);
+//   // db.connect("mongodb+srv://dbUser:Daeun11Dance@cluster0-tjyzj.mongodb.net/shakespace?retryWrites=true&w=majority")
+//   db.connect("mongodb+srv://dbUser:Daeun11Dance@cluster0-tjyzj.mongodb.net/shakespace?retryWrites=true&w=majority")
+//   .then(() => {
+//     console.log('Connected to MongoDB');
+//   })
+//   .catch((err) => {
+//     console.error(err);
+//   });
+// }
 app.engine('.hbs',hbstempl({extname:'.hbs'}))
 app.set('view engine','.hbs');
 
@@ -232,4 +232,4 @@ app.use((err,req, res, next)=>{
 })
 // setup http server to listen on HTTP_PORT
 // app.listen(HTTP_PORT, onHttpStart);
-app.listen(HTTP_PORT, onHttpStart);
+app.listen(HTTP_PORT);
