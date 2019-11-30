@@ -56,9 +56,9 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }))
 
-// app.get('/favicon.ico',(req,res)=>{
-//   res.redirect('/');
-// })
+app.get('/favicon.ico',(req,res)=>{
+  res.redirect('/');
+})
 
 app.get('/login',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
 
