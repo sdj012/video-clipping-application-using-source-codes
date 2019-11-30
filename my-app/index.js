@@ -36,9 +36,9 @@ app.set('views',__dirname+'/views');
 app.set('view engine','.hbs');
 
 
-app.get('/',(req,res,next)=>{
-  res.render('index',{layout:false});
-});
+// app.get('/',(req,res,next)=>{
+//   res.render('index',{layout:false});
+// });
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,9 +60,9 @@ app.get('/favicon.ico',(req,res)=>{
   res.redirect('/');
 })
 
-app.get('/login',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
+app.get('/',(req,res)=>{res.render('index',{error:req.query.error,layout:false})});
 
-app.post('/login',
+app.post('/',
   passport.authenticate('local'),
   function(req, res) {
     loggedInUser=req.user.username;
