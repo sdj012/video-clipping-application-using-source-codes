@@ -50,6 +50,13 @@ html{
   top:30;
   left:245px;
 }
+.closeButton{
+  visibility: hidden;
+  position:fixed;
+  top:30;
+  left:400px;
+
+}
 
 
 body{
@@ -98,15 +105,18 @@ body{
 
 
 <body>
-{{!-- <video autoplay muted loop id="background-video" source src="../Turntable - 8453.mp4" type="video/mp4"></video> --}}
-{{!-- <img src="../abstract-1780129_1920.png" id="background-video"> --}}
+
 <div>
   <div><a  class="logoutLink" href="/logout">Logout</a></div>
   <div><button class="addVideo removeBoxes" id="font" onclick="displayBoxes()">-</button></div>
-  <form method="GET" action={{data.username}}>
+  
+  <form method="GET" action={{data.username}} id="deletionForm">
   <div class="playlist">{{{playlist}}}</div>
   <button class="addVideo removeButton" id="font" value="submit">Remove Video</button>
   </form>
+
+  <button class="addVideo closeButton" id="font" onclick="hideBoxes()">x</button>
+
 </div>
 </body>
 
