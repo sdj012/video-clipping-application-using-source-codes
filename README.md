@@ -1,4 +1,4 @@
-#Harbour
+# Harbour
 This application was created to provide a distraction-less space for streaming videos.
 It is able to render embed codes of videos from sources such as Youtube,V Live, or Dailymotion. 
 It currently functions best in desktop setting.
