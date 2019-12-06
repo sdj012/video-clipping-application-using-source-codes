@@ -10,6 +10,8 @@ const MongoStore=require('connect-mongo')(session);
 const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
+var crypto = require("crypto");
+
 // const connectionString=process.env.MONGODB_CONNECTION_STRING;
 const connectionString=process.env.MONGODB_URI
 
@@ -18,7 +20,7 @@ var app = express();
 var variable=[];
 var videos=[];
 var playlist=[];
-var HTTP_PORT = process.env.PORT;
+var HTTP_PORT = process.env.PORT||3000;
 var loggedInUser;
 // call this function after the http server starts listening for requests
 
@@ -103,7 +105,7 @@ app.get('/home/:username',(req,res)=>{
       console.log("this is one video" + video);
       UserModel.findOneAndUpdate(
         {username:req.params.username},
-        {$pull:{videos:{"0":video}}},
+        {$pull:{videos:{"1":video}}},
         {useFindAndModify:false},
         function(err) {
           if(err){
@@ -118,7 +120,7 @@ app.get('/home/:username',(req,res)=>{
 
         UserModel.findOneAndUpdate(
           {username:req.params.username},
-          {$pull:{videos:{"0":req.query.selectedVideos}}},
+          {$pull:{videos:{"1":req.query.selectedVideos}}},
           {useFindAndModify:false},
           function(err) {
             if(err){
@@ -152,7 +154,7 @@ app.get('/home/:username',(req,res)=>{
     }
 
     function addToPlaylist(item){
-      playlist.push("<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+item[0]+"'><br>"+ item[0] +"<br></div>");
+      playlist.push("<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+item[1]+"'><br>"+ item[0] +"<br></div>");
     };
 
 
@@ -175,9 +177,11 @@ app.get('/home/:username',(req,res)=>{
 
 app.post('/home/:username',(req,res,next)=>{
 
+var videoId = crypto.randomBytes(20).toString('hex');
+
  UserModel.findOneAndUpdate(
    {username:req.params.username},
-    {$push:{videos:{"0":req.body.link}}},
+    {$push:{videos:{"0":req.body.link,"1":videoId}}},
     {useFindAndModify:false},
     function(err, doc) {
         if(err){
