@@ -8,6 +8,6 @@ View Engine: Handlebars
 Libraries:CryptoJS
 Middlewares: passport,body-parser,cookie-parser
 
-The index.hbs was built from a template kindly provided by Aigars Silkalns (https://codepen.io/colorlib/pen/rxddKy).
+The index.hbs page was built from a template kindly provided by Aigars Silkalns (https://codepen.io/colorlib/pen/rxddKy).
 
 
