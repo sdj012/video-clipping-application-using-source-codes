@@ -29,14 +29,14 @@ const UserSchema=mongoose.Schema({
     type:String,
     required:true,
     trim:true, //removes trailing spaces
-    index:{unique:true},//ensures uniqueness
+    index:{unique:false},//ensures uniqueness
     minlength:8,
   },
 
   videos:{
     type:Object,
     required:false,
-    index:{unique:true},
+    index:{unique:false,sparse:true},
   }
 },
 {

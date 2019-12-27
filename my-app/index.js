@@ -78,6 +78,40 @@ app.post('/',
   // By default, if auth fails, pp will respond with a 401 status. 
 );
 
+app.post('/registration', async (req,res,next)=>{
+
+  console.log("hit post route, trying to save "+ req.body.username);
+
+
+  try{
+
+    var user = {};
+    user=new UserModel({
+
+      username: req.body.username,
+      email:req.body.email,
+      password:req.body.password,
+      videos:{},
+
+    })
+
+
+    const savedUser=await user.save();
+
+    if(savedUser)return res.redirect('/');
+    return next(new Error('Failed to save user for unknown reasons'));
+
+  }catch(err){
+    return next(err);
+  }
+
+})
+
+app.get('/registration',(req,res)=>{
+
+  res.render('registration',{layout:false})
+  
+});
 
 
 
@@ -174,27 +208,37 @@ app.get('/home/:username',(req,res)=>{
 })
 
 
-
 app.post('/home/:username',(req,res,next)=>{
 
-var videoId = crypto.randomBytes(20).toString('hex');
-
- UserModel.findOneAndUpdate(
-   {username:req.params.username},
-    {$push:{videos:{"0":req.body.link,"1":videoId}}},
-    {useFindAndModify:false},
-    function(err, doc) {
-        if(err){
-        console.log(err);
-        }else{
-        console.log("updated")
-        console.log(req.body.link);
-        return res.redirect('/home/' + req.params.username);
-        }
-    }
-  );
+  var videoId = crypto.randomBytes(20).toString('hex');
+  //if req.body.size=={____} , modify string link string to *{___}link string*
+  /* if */
+  var link=req.body.link;
   
-})
+  var sliceBeg=link.indexOf("width");
+  var sliceEnd=link.indexOf("src");
+  
+  var stringHalf=link.slice(0,sliceBeg);
+  var string2ndHalf=link.slice(sliceEnd);
+  
+  var finalEmbedCode="<div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item' " +string2ndHalf +"</div>"
+  
+   UserModel.findOneAndUpdate(
+     {username:req.params.username},
+      {$push:{videos:{"0":finalEmbedCode,"1":videoId}}},
+      {useFindAndModify:false},
+      function(err, doc) {
+          if(err){
+          console.log(err);
+          }else{
+          console.log("updated")
+          console.log(req.body.link);
+          return res.redirect('/home/' + req.params.username);
+          }
+      }
+    );
+    
+  })
 
 app.post('/home',(req,res)=>{
 
@@ -202,28 +246,7 @@ res.sendFile('home.html',{root:__dirname})
 
 });
 
-app.post('/registration', async (req,res,next)=>{
 
-  try{
-
-    var user = {};
-    user=new UserModel({
-
-      username: req.body.username,
-      email:req.body.email,
-      password:req.body.password,
-      videos:{},
-
-    })
-    const savedUser=await user.save();
-    if(savedUser)return res.redirect('/');
-    return next(new Error('Failed to save user for unknown reasons'));
-
-  }catch(err){
-    return next(err);
-  }
-
-})
 
 //Error Page: if no other route matches...
 app.use((req,res,next)=>{
