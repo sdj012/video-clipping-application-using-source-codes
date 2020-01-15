@@ -103,18 +103,17 @@ app.get('/favicon.ico',(req,res)=>{
 })
 
 
+app.get('/login',(req,res,next)=>{
 
-app.get('/login',(req,res,next,err)=>{
-
-    res.render('login',{layout:false});
+  res.render('login',{layout:false});
 });
 
 app.post('/login',
   passport.authenticate('local'),
-  function(req, res,err) {
+  function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    return res.redirect('/home/' + req.user.username);
+    res.redirect('/home/' + req.user.username);
   },
   // By default, if auth fails, pp will respond with a 401 status. 
 );
@@ -147,20 +146,11 @@ app.post('/registration', async (req,res,next)=>{
 
 })
 
- app.get('/login',(req,res)=>{
-
-  res.render('login',{layout:false})
-  
-});
-
-
 app.get('/registration',(req,res)=>{
 
   res.render('registration',{layout:false})
   
 });
-
-
 
 app.get('/logout',(req,res)=>{
   //passport automatically add function logout to req object. simple call it. It will clear the login session
