@@ -1,0 +1,170 @@
+<!doctype html>
+
+<style>
+  html{
+    height:100%;
+    overflow:auto;
+
+  }
+
+  body{
+    background-color:black;
+    height:100%;
+    overflow:auto;
+  }
+
+  .addVideo{
+    background-color:black;
+    color:grey;
+    font-family:Geneva;
+    opacity: 0.8; 
+  }
+
+  .video{
+  margin-top:20%;
+  margin-bottom:10%;
+  }
+
+  #video {
+  position: fixed;
+  z-index: auto;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  }
+
+  .content {
+  position: fixed;
+  top:30;
+  width: 100%;
+  padding: 20px;
+  }
+
+  .addInputBox{
+  position:fixed;
+  top:10%;
+  left:20px;
+  max-width:200px;
+  max-height:10px;
+  opacity: 0.7;
+  color: grey;
+  font-family:'Helvetica Neue';
+  }
+
+  .addButton{
+    position:fixed;
+    top:12%;
+    left:240px;
+    border-radius:5px;
+    border-style:unset;
+  }
+
+
+  .removeButton{
+    visibility: hidden;
+    position:fixed;
+    top:30;
+    left:265px;
+  }
+
+  .removeBoxes{
+    position:fixed;
+    top:10%;
+    margin-left:280px;
+    border-radius:5px;
+    border-style:unset;
+  }
+
+  .closeButton{
+  visibility: hidden;
+  position:fixed;
+  top:30;
+  left:400px;
+  }
+
+  .addVideo{
+  background-color:black;
+  color:grey;
+  font-family:Geneva;
+  opacity: 0.8; 
+    
+  }
+
+  .playlist{
+  position:absolute;
+  height:100%;
+  margin-top: 35%;
+  margin-bottom:50%;
+  left: 50%;
+  margin-right:-50%;
+  transform: translate(-50%, -50%);
+  }
+
+  #toLoginPage{
+    position: fixed;
+    top:10px;
+    right:20px;
+  }
+
+  .deletionIndicator{
+  visibility: hidden;
+  }
+
+
+</style>
+
+<head>
+<link rel="stylesheet" href="../index.css">
+<title>{{data.username}}</title>
+
+</head>
+
+  <video playbackRate=0.3 autoplay="autoplay" loop="true" mute="true" id="video">
+  <source src="../Dust.mp4" type="video/mp4">
+  </video>
+
+  <div class="content">
+
+  <p style="color:white">embed.</p>
+
+    <div>
+
+    <form method="POST" action="/">
+
+        <input class="addInputBox" type="text" name="link" value=""></input>
+
+        <button type="submit" class="addVideo addButton btn btn-outline-secondary btn btn-sm btn-dark">+</button>
+    
+    </form>
+
+      <button class="addVideo removeBoxes btn btn-outline-secondary btn btn-sm btn-dark" onclick="displayBoxes()">-</button>
+        
+    </div>
+
+  </div>
+
+<body>
+
+
+  <form method="GET" action={{data.username}} id="deletionForm">
+
+    <div class="playlist">{{{playlist}}}</div>
+    
+    <button class="addVideo removeButton" id="font" value="submit">Remove Video</button>
+    
+  </form>
+
+  <button class="addVideo closeButton" id="font" onclick="hideBoxes()">x</button>
+
+    <a id="toLoginPage" style="color:white" href="login">login</a>
+
+  </div>
+
+</body>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="index.js"></script>
+  <script  type="text/javascript"  src="../home.js"></script>

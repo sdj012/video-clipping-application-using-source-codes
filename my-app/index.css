@@ -4,6 +4,7 @@
 
 html {
   background-color:black;
+  z-index: 0;
 }
 
 body {
@@ -12,7 +13,7 @@ body {
 }
 
 a {
-  color: #92badd;
+  color: black;
   display:inline-block;
   text-decoration: none;
   font-weight: 400;
@@ -34,26 +35,30 @@ h2 {
 
 .wrapper {
   display: flex;
-  align-items: center;
-  flex-direction: column; 
-  justify-content: center;
+  margin-top:20%;
+  align-items:right;
+  z-index: 0;
+  /* flex-direction: column;  */
+  justify-content: right;
   width: 100%;
+  padding-right:10%;
   min-height: 100%;
-  padding: 20px;
 }
 
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
-  background: #fff;
+  /* background: black; */
+  opacity: 0.8;
   padding: 30px;
   width: 90%;
-  max-width: 450px;
+  max-width: 350px;
   position: relative;
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
+  margin-right:60px;
 }
 
 #formFooter {
@@ -139,7 +144,7 @@ input[type=text],input[type=password] {
 
 input[type=text],input[type=password] :focus {
   background-color: #fff;
-  border-bottom: 2px solid  black;
+  /* border-bottom: 2px solid  black; */
 }
 
 input[type=text],input[type=password] :placeholder {
@@ -154,7 +159,7 @@ input[type=text],input[type=password] :placeholder {
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
-  -webkit-animation-duration: 1s;
+  -webkit-animation-duration: 3s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;

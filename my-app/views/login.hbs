@@ -1,0 +1,73 @@
+<!doctype html>
+<head>
+<link rel="stylesheet" href="../index.css">
+</head>
+
+<style>
+  
+  html{
+    overflow-y: hidden;
+  }
+
+  #caption{
+    color: white;
+    position: absolute;
+    font-size:medium;
+    opacity: 0.5;
+    left:20%;
+    top:40%;
+    z-index: 1;
+  }
+
+  #video {
+  position: fixed;
+  z-index: 0;
+  top:18%;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height:100%;
+  }
+
+
+</style>
+
+<body>
+<p class="fadeInDown" id="caption">logo </p>
+<video autoplay="autoplay" loop="true" mute="true" id="video">
+  <source src="../Dust.mp4" type="video/mp4">
+</video>
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <h2 class="active"> </h2>
+      <!-- <h2 class="inactive underlineHover">Sign Up </h2>
+   -->
+      <!-- Icon -->
+      <!-- <div class="fadeIn first">
+        <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
+      </div> -->
+  
+      <!-- Login Form -->
+      <form method="POST" action="login">
+        <input type="text" id="login" class="fadeIn second" name="username" placeholder="username">
+        <input type="password" class="fadeIn third" name="password" placeholder="password">
+        <br>
+        <br>
+        <input type="submit" class="fadeIn fourth" value="Enter">
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        {{!-- <a class="underlineHover" href="#">Login Assistance</a>
+        <br> --}}
+        <a class="underlineHover" href="registration">create page</a>
+      </div>
+  
+    </div>
+  </div>
+
+<script src="index.js"></script>
+</body>
+

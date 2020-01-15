@@ -1,12 +1,6 @@
 <!doctype html>
 <html>
 
-<head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <title>{{data.username}}</title>
-</head>
-
-
 
 <style>
 
@@ -14,12 +8,39 @@ html{
   height:100%;
 }
 
+body{ 
+  scroll-behavior: unset;
+  height:100%;
+
+}
+
+#video {
+  position: fixed;
+  z-index: 0;
+  top:18%;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height:100%;
+
+}
+
+.content {
+  z-index: 1;
+  position: fixed;
+  top:1%;
+  width: 100%;
+  padding-left: 20px;
+  font-size:larger;
+  color: white;
+}
+
 .logoutLink{
-  position:fixed;
-  top:0px;
-  right:1pc;
+  position: fixed;
+  top:10px;
+  right:20px;
+  z-index: 1;
   color:white;
-  opacity: 0.3;
 }
 
 .logoutLink:hover{
@@ -29,100 +50,177 @@ html{
 
 .addInputBox{
   position:fixed;
-  top:2%;
-  margin-left:1pc;
+  z-index: 2;
+  top:10%;
+  left:20px;
+  max-width:200px;
+  max-height:10px;
+  font-family:'Helvetica Neue';
 }
 
 .addButton{
   position:fixed;
-  top:2%;
-  margin-left:210px;
+  z-index: 2;
+  top:12%;
+  left:240px;
+  border-radius:5px;
+  border-style:unset;
+  background-color: white;
+}
+
+.removeBoxes{
+  position:fixed;
+  z-index: 2;
+  top:12%;
+  left:280px;
+  border-radius:5px;
+  border-style:unset;
 }
 
 .removeButton{
   visibility: hidden;
+  z-index: 2;
   position:fixed;
-  top:30;
-  left:280px;
+  top:20%;
+  left:100px;
+  border-radius:5px;
+  border-style:unset;
 }
-.removeBoxes{
-  position:fixed;
-  top:2%;
-  left:245px;
-}
+
 .closeButton{
   visibility: hidden;
   position:fixed;
-  top:30;
-  left:400px;
+  z-index: 2;
+  top:20%;
+  left:200px;
+  border-radius:5px;
+  border-style:unset;
 
 }
 
-
-body{
-  background-color:black;
-  height:100%;
-
-}
 .playlist{
   position:absolute;
+  z-index: 1;
   height:100%;
-  margin-top: 50%;
+  padding-top:40%;
+  margin-bottom:50%;
   left: 50%;
   margin-right:-50%;
-  transform: translate(-50%, -50%) 
+  transform: translate(-50%, -50%);
 }
 
 .addVideo{
   background-color:black;
-  color:white;
+  color:grey;
   font-family:Geneva;
+  opacity: 0.8; 
 }
 #font{
-  font-size:smaller;
-  opacity: 0.3; 
-}
-
-.video{
-  margin-top:20%;
-  margin-bottom:10%;
+  opacity: 1;
+  color:black;
+  background-color: white;
 }
 
 .deletionIndicator{
   visibility: hidden;
+  margin-left:-1.5%;
+  z-index: 3;
+
 }
+
+
+#navbar{
+  overflow: hidden;
+  background-color: black;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  height: 15%;
+  width: 100%; /* Full width */
+  /*background: linear-gradient(black,transparent);*/
+  background-size:cover;
+  z-index: 2;
+
+}
+
+#centre{
+  overflow: hidden;
+  background-color: black;
+  position: fixed;
+  top: 15%; /* Position the navbar at the top of the page */
+  height: 10%;
+  width: 100%; /* Full width */
+  background: linear-gradient(black,transparent);
+  background-size:cover;
+  z-index: 2;
+}
+
+.video{
+  /*margin-bottom:20%;*/
+  padding-bottom:30%;
+}
+/*.embed-responsive{
+  padding-top:20%;
+  padding-bottom:10%;
+}*/
 
 </style>
 
+<head>
+  <link rel="stylesheet" href="../index.css">
+  {{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
+  <title>{{data.username}}</title>
+</head>
+
 <div>
+
+  <video autoplay="autoplay" loop="true" mute="true" id="video">
+  <source src="../Dust.mp4" type="video/mp4">
+  </video>
+
+<div id="navbar">
+
+<p class="content" style="color:white">embed.<img width="2%" style="z-index: 2; margin-left:1%;" src="../embedLogoWhite.png"></img></p>
   <form method="POST" action={{data.username}}>
-    <input class="addVideo addInputBox" id="font" type="text" name="link" value=""></input>
-    <button class="addVideo addButton" id="font" type="submit">+</button>
+
+      <input class="addInputBox" type="text" name="link" value=""></input>
+
+      <button type="submit" class="addVideo addButton">+</button>
+      {{!-- <button type="submit" class="addVideo addButton btn btn-outline-secondary btn btn-sm btn-dark">+</button> --}}
+  
   </form>
-<div>
+
+      <button class="addVideo removeBoxes" onclick="displayBoxes()">-</button>
+      {{!-- <button class="addVideo removeBoxes btn btn-outline-secondary btn btn-sm btn-dark" onclick="displayBoxes()">-</button> --}}
 
 
+  <a  class="logoutLink" href="/logout">logout</a>
+  
+</div>
 
+<div id="centre"></div>
 <body>
 
 <div>
-  <div><a  class="logoutLink" href="/logout">Logout</a></div>
-  <div><button class="addVideo removeBoxes" id="font" onclick="displayBoxes()">-</button></div>
-  
+
   <form method="GET" action={{data.username}} id="deletionForm">
-  <div class="playlist">{{{playlist}}}</div>
-  <button class="addVideo removeButton" id="font" value="submit">Remove Video</button>
+
+    <div class="playlist">{{{playlist}}}</div>
+    <button class="addVideo removeButton" id="font" value="submit">remove</button>
+    
   </form>
 
   <button class="addVideo closeButton" id="font" onclick="hideBoxes()">x</button>
 
 </div>
+
 </body>
+
+</div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <script src="../index.js"></script>
+  <script src="index.js"></script>
   <script type="text/javascript" src="../home.js"></script>
 
 <footer>

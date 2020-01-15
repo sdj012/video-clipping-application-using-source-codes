@@ -22,6 +22,8 @@ var videos=[];
 var playlist=[];
 var HTTP_PORT = process.env.PORT || 3000;
 var loggedInUser;
+var List=[];
+var embed="";
 // call this function after the http server starts listening for requests
 
 function onHttpStart() {
@@ -39,11 +41,6 @@ app.set('views',__dirname+'/views');
 app.set('view engine','.hbs');
 
 
-// app.get('/',(req,res,next)=>{
-//   res.render('index',{layout:false});
-// });
-
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.unsubscribe(cookieParser());
 app.use(express.static(__dirname))
@@ -59,29 +56,72 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }))
 
+// app.get('/',(req,res,next)=>{
+//   return res.render('index',{layout:false});
+// });
+
+app.get('/',(req,res)=>{
+  console.log("get route '/' hit " + JSON.stringify(List));
+  // let embed=JSON.stringify(List[0]);
+  embed="";
+  var i;
+  for(i of List){
+    embed += i;
+  }
+  
+  console.log(embed);
+  
+  return res.render('index',{tempPlayList:embed,error:req.query.error,layout:false})
+});
+
+app.post('/',(req,res)=>{
+
+  var link=req.body.link;
+  
+  var sliceBeg=link.indexOf("width");
+
+  var stringHalf=link.slice(0,sliceBeg);
+  var string2ndHalf=link.slice(sliceBeg);
+  
+  var finalEmbedCode="<div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item'" +string2ndHalf +"</div>"
+  finalEmbedCode=finalEmbedCode.replace(/\"/g,"'");
+
+  List.push(finalEmbedCode);
+
+  console.log("post '/' hit "+ List)
+
+  link="";
+
+  finalEmbedCode="";
+
+  return res.redirect('/');
+
+})
+
 app.get('/favicon.ico',(req,res)=>{
   return res.redirect('/');
 })
 
-app.get('/',(req,res)=>{
-  return res.render('index',{error:req.query.error,layout:false})
+
+
+app.get('/login',(req,res,next,err)=>{
+
+    res.render('login',{layout:false});
 });
 
-app.post('/',
+app.post('/login',
   passport.authenticate('local'),
-  function(req, res) {
-    loggedInUser=req.user.username;
+  function(req, res,err) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     return res.redirect('/home/' + req.user.username);
-  }
+  },
   // By default, if auth fails, pp will respond with a 401 status. 
 );
 
 app.post('/registration', async (req,res,next)=>{
 
   console.log("hit post route, trying to save "+ req.body.username);
-
 
   try{
 
@@ -107,6 +147,13 @@ app.post('/registration', async (req,res,next)=>{
 
 })
 
+ app.get('/login',(req,res)=>{
+
+  res.render('login',{layout:false})
+  
+});
+
+
 app.get('/registration',(req,res)=>{
 
   res.render('registration',{layout:false})
@@ -122,6 +169,7 @@ app.get('/logout',(req,res)=>{
   return res.redirect('/');
 
 })
+
 
 app.get('/home/:username',(req,res)=>{
 
@@ -198,6 +246,8 @@ app.get('/home/:username',(req,res)=>{
     }
   }
 
+  console.log(playlist);
+
   res.render('home',{playlist:playlist, data:variable,layout:false});
   })
 
@@ -216,11 +266,11 @@ app.post('/home/:username',(req,res,next)=>{
   var link=req.body.link;
   
   var sliceBeg=link.indexOf("width");
-  var sliceEnd=link.indexOf("src");
+  // var sliceEnd=link.indexOf("src");
   
   var stringHalf=link.slice(0,sliceBeg);
-  var string2ndHalf=link.slice(sliceEnd);
-  
+  var string2ndHalf=link.slice(sliceBeg);
+    
   var finalEmbedCode="<div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item' " +string2ndHalf +"</div>"
   
    UserModel.findOneAndUpdate(
@@ -230,7 +280,7 @@ app.post('/home/:username',(req,res,next)=>{
       function(err, doc) {
           if(err){
           console.log(err);
-          }else{
+          }else{ 
           console.log("updated")
           console.log(req.body.link);
           return res.redirect('/home/' + req.params.username);
@@ -240,6 +290,7 @@ app.post('/home/:username',(req,res,next)=>{
     
   })
 
+
 app.post('/home',(req,res)=>{
 
 res.sendFile('home.html',{root:__dirname})
@@ -247,11 +298,11 @@ res.sendFile('home.html',{root:__dirname})
 });
 
 
-
 //Error Page: if no other route matches...
 app.use((req,res,next)=>{
   return next(createError(404,'File not found'))
 })
+
 
 app.use((err,req, res, next)=>{
   // res.local.message=err.message;

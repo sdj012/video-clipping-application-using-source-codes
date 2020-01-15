@@ -1,38 +1,157 @@
 <!doctype html>
+
+<style>
+  html{
+    height:100%;
+  }
+  body{
+    scroll-behavior: unset;
+    height:100%;
+  }
+
+  #video {
+  position: fixed;
+  z-index: auto;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  }
+
+
+  .content {
+  z-index: 1;
+  position: fixed;
+  top:1%;
+  width: 100%;
+  padding: 20px;
+  font-size:larger;
+  color: white;
+  }
+
+  .addInputBox{
+  position:fixed;
+  top:10%;
+  left:20px;
+  max-width:200px;
+  max-height:10px;
+  /* opacity: 0.7;
+  color: grey;
+  font-family:'Helvetica Neue';*/
+  }
+
+  .addButton{
+    position:fixed;
+    top:12%;
+    left:240px;
+    border-radius:5px;
+    border-style:unset;
+  }
+
+  .removeBoxes{
+    position:fixed;
+    top:10%;
+    margin-left:280px;
+    border-radius:5px;
+    border-style:unset;
+  }
+
+
+  .addVideo{
+  background-color:black;
+  color:grey;
+  font-family:Geneva;
+  opacity: 0.8; 
+    
+  }
+
+  .removeButton{
+    visibility: hidden;
+    position:fixed;
+    top:30;
+    left:265px;
+  }
+
+  .tempPlaylist {
+    /*position:relative;
+    top:45%;
+    z-index: 0;
+    position:absolute;
+    height:100%;
+    margin-top: 35%;
+    margin-bottom:50%;
+    left: 50%;
+    margin-right:-50%;
+    transform: translate(-50%, -50%);
+    */
+
+    position:absolute;
+    z-index: 1;
+    height:100%;
+    margin-top: 45%;
+    margin-bottom:50%;
+    left: 50%;
+    margin-right:-50%;
+    transform: translate(-50%, -50%);
+    }
+
+  #toLoginPage{
+    position: fixed;
+    top:10px;
+    right:20px;
+  }
+
+  #Layer_1{
+    z-index: 2;
+  }
+
+  .embed-responsive{
+    margin-top:20%;
+    margin-bottom:10%;
+  }
+
+</style>
+
 <head>
 <link rel="stylesheet" href="../index.css">
+{{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
+
 </head>
 
-<body>
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-      <!-- Tabs Titles -->
-      <h2 class="active"> </h2>
-      <!-- <h2 class="inactive underlineHover">Sign Up </h2>
-   -->
-      <!-- Icon -->
-      <!-- <div class="fadeIn first">
-        <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
-      </div> -->
-  
-      <!-- Login Form -->
-      <form method="POST" action="/">
-        <input type="text" id="login" class="fadeIn second" name="username" placeholder="name">
-        <input type="password" class="fadeIn third" name="password" placeholder="password">
-        <br>
-        <br>
-        <input type="submit" class="fadeIn fourth" value="Enter">
-      </form>
-  
-      <!-- Remind Passowrd -->
-      <div id="formFooter">
-        {{!-- <a class="underlineHover" href="#">Login Assistance</a>
-        <br> --}}
-        <a class="underlineHover" href="registration">Become a Member</a>
-      </div>
-  
+<div>
+
+  <video playbackRate=0.3 autoplay="autoplay" loop="true" mute="true" id="video">
+  <source src="../Dust.mp4" type="video/mp4">
+  </video>
+
+  <p class="content" style="color:white">embed.<img width="2%" style="z-index: 1; margin-left:1%" src="../embedLogoWhite.png"></img></p>
+
+    <div>
+
+    <form method="POST" action="/">
+
+        <input class="addInputBox" type="text" name="link" value=""></input>
+
+        <button type="submit" class="addVideo addButton btn btn-outline-secondary btn btn-sm btn-dark">+</button>
+    
+    </form>
+        
     </div>
-  </div>
-<script src="../index.js"></script>
+
+</div>
+
+
+  <a id="toLoginPage" style="color:white" href="login">login</a>
+
+<body>
+
+  <div class="tempPlaylist">{{{tempPlayList}}}</div>
+
+
 </body>
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="index.js"></script>
+  <script  type="text/javascript"  src="../home.js"></script>
