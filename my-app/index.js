@@ -98,14 +98,9 @@ app.post('/',(req,res)=>{
 
 })
 
-app.get('/favicon.ico',(req,res)=>{
-  return res.redirect('/');
-})
-
-
 app.get('/login',(req,res,next)=>{
 
-  res.render('login',{layout:false});
+  return res.render('login',{layout:false});
 });
 
 app.post('/login',
@@ -113,10 +108,16 @@ app.post('/login',
   function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.redirect('/home/' + req.user.username);
-  },
+    loggedInUser=req.user.username;
+    console.log("login post route hit"+req.user.username);
+    return res.redirect('/home/' + req.user.username);
+  }, 
   // By default, if auth fails, pp will respond with a 401 status. 
 );
+
+app.get('/favicon.ico',(req,res)=>{
+  return res.redirect('/');
+})
 
 app.post('/registration', async (req,res,next)=>{
 
@@ -162,7 +163,6 @@ app.get('/logout',(req,res)=>{
 
 
 app.get('/home/:username',(req,res)=>{
-
   if (loggedInUser===req.params.username) {
 
   //update data
