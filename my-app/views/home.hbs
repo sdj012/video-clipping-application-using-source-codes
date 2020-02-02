@@ -50,17 +50,21 @@ body{
 
 .addInputBox{
   position:fixed;
-  z-index: 2;
+  z-index: 3;
   top:10%;
   left:20px;
   max-width:200px;
   max-height:10px;
   font-family:'Helvetica Neue';
+  /*visibility:hidden;*/
+  opacity: 0;
+  transition: all 1s ease-in;
+  
 }
 
 .addButton{
   position:fixed;
-  z-index: 2;
+  z-index: 3;
   top:12%;
   left:240px;
   border-radius:5px;
@@ -70,7 +74,7 @@ body{
 
 .removeBoxes{
   position:fixed;
-  z-index: 2;
+  z-index: 3;
   top:12%;
   left:280px;
   border-radius:5px;
@@ -79,7 +83,7 @@ body{
 
 .removeButton{
   visibility: hidden;
-  z-index: 2;
+  z-index: 3;
   position:fixed;
   top:20%;
   left:100px;
@@ -90,7 +94,7 @@ body{
 .closeButton{
   visibility: hidden;
   position:fixed;
-  z-index: 2;
+  z-index: 3;
   top:20%;
   left:200px;
   border-radius:5px;
@@ -116,6 +120,7 @@ body{
   font-family:Geneva;
   opacity: 0.8; 
 }
+
 #font{
   opacity: 1;
   color:black;
@@ -125,7 +130,7 @@ body{
 .deletionIndicator{
   visibility: hidden;
   margin-left:-1.5%;
-  z-index: 3;
+  z-index: 5;
 
 }
 
@@ -184,6 +189,38 @@ iframe{
   padding-bottom:10%;
 }*/
 
+.dropdown{
+  position:fixed;
+  bottom:2%;
+  z-index: 3;
+  color:white;
+  background-color: black;
+}
+
+.s{
+  left:5px;
+}
+
+.m{
+  left:30px;
+}
+
+.l{
+  left:60px;
+}
+
+#logo{
+width:20px;
+z-index: 2;
+margin-left:1%; 
+transition:width 1 ease-in;
+}
+
+#logo:hover{
+  width:21px;
+}
+  
+
 </style>
 
 <head>
@@ -194,13 +231,13 @@ iframe{
 
 <div>
 
-  <video autoplay="autoplay" loop="true" mute="true" id="video">
+  {{!-- <video autoplay="autoplay" loop="true" mute="true" id="video">
   <source src="../Dust.mp4" type="video/mp4">
-  </video>
+  </video> --}}
 
 <div id="navbar">
 
-<p class="content" style="color:white">embed.<img width="2%" style="z-index: 2; margin-left:1%;" src="../embedLogoWhite.png"></img></p>
+<p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png" onclick="reveal()"></img></p>
   <form method="POST" action={{data.username}}>
 
       <input class="addInputBox" type="text" name="link" value=""></input>
@@ -234,8 +271,12 @@ iframe{
 
 </div>
 
-</body>
+  <button class="dropdown s" onclick="s()">s</button></option>
+  <button class="dropdown m " onclick="m()">m</button></option>
+  <button class="dropdown l" onclick="l()">l</button></option>
 
+
+</body>
 </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
