@@ -4,9 +4,11 @@
   html{
     height:100%;
   }
-  body{
+
+  body{ 
+    scroll-behavior: unset;
     height:100%;
-    scroll-behavior:smooth;
+
   }
 
   #video {
@@ -18,26 +20,26 @@
   min-height: 100%;
   }
 
-
   .content {
-  z-index: 1;
-  position: fixed;
-  top:1%;
-  width: 100%;
-  padding: 20px;
-  font-size:larger;
-  color: white;
+    z-index: 1;
+    position: fixed;
+    top:1%;
+    width: 100%;
+    padding: 20px;
+    font-size:larger;
+    color: white;
   }
 
   .addInputBox{
-  position:fixed;
-  top:10%;
-  left:20px;
-  max-width:200px;
-  max-height:10px;
-  /* opacity: 0.7;
-  color: grey;
-  font-family:'Helvetica Neue';*/
+    position:fixed;
+    z-index: 3;
+    top:10%;
+    left:20px;
+    max-width:200px;
+    max-height:10px;
+    font-family:'Helvetica Neue';
+    /*visibility:hidden;*/
+    transition: all 1s ease-in;
   }
 
   .addButton{
@@ -58,10 +60,10 @@
 
 
   .addVideo{
-  background-color:black;
-  color:grey;
-  font-family:Geneva;
-  opacity: 0.8; 
+    background-color:black;
+    color:grey;
+    font-family:Geneva;
+    opacity: 0.8; 
     
   }
 
@@ -73,27 +75,16 @@
   }
 
   .tempPlaylist {
-    /*position:relative;
-    top:45%;
-    z-index: 0;
     position:absolute;
-    height:100%;
-    margin-top: 35%;
-    margin-bottom:50%;
-    left: 50%;
-    margin-right:-50%;
-    transform: translate(-50%, -50%);
-    */
-
-    position:absolute;
-    z-index: 3;
+    z-index: 1;
+    width:100%;
     height:100%;
     margin-top: 45%;
     margin-bottom:50%;
-    left: 50%;
+    left:50%;
     margin-right:-50%;
-    transform: translate(-50%, -50%);
-    }
+    transform:translate(-50%,-50%);
+  }
 
   #toLoginPage{
     position: fixed;
@@ -101,28 +92,42 @@
     right:20px;
   }
 
-  #Layer_1{
-    z-index: 2;
+  .video{
+    margin-left:auto;
+    margin-right:auto;
+    width:50%;
+    height:50%;
+    margin-bottom:25%;
+  }
+
+  iframe{
+    position:relative;
+    width:100%;
+    height:100%;
+    z-index: 1;
+    margin-left:auto;
+    margin-right:auto;
   }
 
   .embed-responsive{
-    margin-top:20%;
-    margin-bottom:10%;
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+    height:100%;
   }
 
 </style>
 
 <head>
 <link rel="stylesheet" href="../index.css">
-{{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
-
 </head>
 
 <div>
+<div>
 
-  <video playbackRate=0.3 autoplay="autoplay" loop="true" mute="true" id="video">
+  {{!-- <video playbackRate=0.3 autoplay="autoplay" loop="true" mute="true" id="video">
   <source src="../Dust.mp4" type="video/mp4">
-  </video>
+  </video> --}}
 
   <p class="content" style="color:white">embed.<img width="2%" style="z-index: 1; margin-left:1%" src="../embedLogoWhite.png"></img></p>
 
@@ -144,11 +149,13 @@
   <a id="toLoginPage" style="color:white" href="login">login</a>
 
 <body>
+  
 
   <div class="tempPlaylist">{{{tempPlayList}}}</div>
 
 
 </body>
+</div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

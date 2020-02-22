@@ -3,21 +3,22 @@
 
     let elements=document.getElementsByClassName('deletionIndicator');
     for(element of elements){
-      element.style.visibility="visible";
+      element.style.opacity=1;
     };
 
     let removebutton=document.getElementsByClassName('removeButton');
     for(element of removebutton){
-      element.style.visibility="visible";
+      element.style.opacity=1;
     };
 
     let closebutton=document.getElementsByClassName('closeButton');
     for(element of closebutton){
-      element.style.visibility="visible";
+      element.style.opacity=1;
     };
     console.log("displayBoxes hit")
 
     return 0;
+
   }
 
   function hideBoxes(){
@@ -26,17 +27,17 @@
     
     let elements=document.getElementsByClassName('deletionIndicator');
     for(element of elements){
-      element.style.visibility="hidden";
+      element.style.opacity=0;
     };
 
     let removebutton=document.getElementsByClassName('removeButton');
     for(element of removebutton){
-      element.style.visibility="hidden";
+      element.style.opacity=0;
     };
 
     let closebutton=document.getElementsByClassName('closeButton');
     for(element of closebutton){
-      element.style.visibility="hidden";
+      element.style.opacity=0;
     };
 
     return 0;
@@ -53,6 +54,7 @@
    }
 
    return 0;
+
   }
 
   function m(){
@@ -77,6 +79,7 @@
     }
  
     return 0;
+
   }
 
   function reveal(){
@@ -85,11 +88,17 @@
 
       for(f of field){
 
-        // if(f.style.visibility==="visible")f.style.visibility="hidden"
-        // else f.style.visibility="visible"
-
         if(f.style.opacity==0)f.style.opacity=1
         else f.style.opacity=0;
+        
+      }
+
+      let btn1=document.getElementsByClassName('addVideo');
+
+      for(b1 of btn1){
+
+        if(b1.style.opacity==0)b1.style.opacity=1
+        else b1.style.opacity=0;
         
       }
 

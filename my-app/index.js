@@ -12,7 +12,6 @@ const auth = require('./auth');
 const hbstempl=require('express-handlebars');
 var crypto = require("crypto");
 
-// const connectionString=process.env.MONGODB_CONNECTION_STRING;
 const connectionString=process.env.MONGODB_URI
 
 const db=require('../lib/db')
@@ -24,6 +23,7 @@ var HTTP_PORT = process.env.PORT || 3000;
 var loggedInUser;
 var List=[];
 var embed="";
+
 // call this function after the http server starts listening for requests
 
 function onHttpStart() {
@@ -56,20 +56,15 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }))
 
-// app.get('/',(req,res,next)=>{
-//   return res.render('index',{layout:false});
-// });
 
 app.get('/',(req,res)=>{
-  console.log("get route '/' hit " + JSON.stringify(List));
-  // let embed=JSON.stringify(List[0]);
+  console.log("get route '/' hit ");
   embed="";
   var i;
   for(i of List){
     embed += i;
   }
   
-  console.log(embed);
   
   return res.render('index',{tempPlayList:embed,error:req.query.error,layout:false})
 });
@@ -78,17 +73,16 @@ app.post('/',(req,res)=>{
 
   var link=req.body.link;
   
-  var sliceBeg=link.indexOf("width");
+  var sliceBeg=link.indexOf(" width");
 
   var stringHalf=link.slice(0,sliceBeg);
   var string2ndHalf=link.slice(sliceBeg);
   
-  var finalEmbedCode="<div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item'" +string2ndHalf +"</div>"
-  finalEmbedCode=finalEmbedCode.replace(/\"/g,"'");
+  var finalEmbedCode="<div class='video'><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item'" +string2ndHalf +"</div></div>"
 
   List.push(finalEmbedCode);
 
-  console.log("post '/' hit "+ List)
+  console.log("post '/' hit ")
 
   link="";
 
@@ -109,7 +103,7 @@ app.post('/login',
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     loggedInUser=req.user.username;
-    console.log("login post route hit"+req.user.username);
+    console.log("login post route hit");
     return res.redirect('/home/' + req.user.username);
   }, 
   // By default, if auth fails, pp will respond with a 401 status. 
@@ -169,7 +163,6 @@ app.get('/home/:username',(req,res)=>{
       if(req.query && req.query.selectedVideos){
 
       console.log("query route hit");
-      console.log(req.query.selectedVideos);
 
       if(typeof req.query.selectedVideos === 'object'){
 
@@ -236,8 +229,6 @@ app.get('/home/:username',(req,res)=>{
     }
   }
 
-  console.log(playlist);
-
   res.render('home',{playlist:playlist, data:variable,layout:false});
   })
 
@@ -251,12 +242,10 @@ app.get('/home/:username',(req,res)=>{
 app.post('/home/:username',(req,res,next)=>{
 
   var videoId = crypto.randomBytes(20).toString('hex');
-  //if req.body.size=={____} , modify string link string to *{___}link string*
-  /* if */
+
   var link=req.body.link;
   
   var sliceBeg=link.indexOf("width");
-  // var sliceEnd=link.indexOf("src");
   
   var stringHalf=link.slice(0,sliceBeg);
   var string2ndHalf=link.slice(sliceBeg);
@@ -272,7 +261,6 @@ app.post('/home/:username',(req,res,next)=>{
           console.log(err);
           }else{ 
           console.log("updated")
-          console.log(req.body.link);
           return res.redirect('/home/' + req.params.username);
           }
       }
@@ -295,11 +283,8 @@ app.use((req,res,next)=>{
 
 
 app.use((err,req, res, next)=>{
-  // res.local.message=err.message;
-  // const status=err.status || 500;
-  // res.locals.status=status;
-  // res.status(status);
   return res.render('error',{layout:false})
 })
+
 // setup http server to listen on HTTP_PORT
 app.listen(HTTP_PORT, onHttpStart);
