@@ -59,13 +59,14 @@ app.use(session({
 
 app.get('/',(req,res)=>{
   console.log("get route '/' hit ");
-  embed="";
   var i;
+  embed="";
+  
   for(i of List){
     embed += i;
   }
-  
-  
+  List=[];
+
   return res.render('index',{tempPlayList:embed,error:req.query.error,layout:false})
 });
 
