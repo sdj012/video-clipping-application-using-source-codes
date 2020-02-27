@@ -49,14 +49,13 @@ body{
 
 .addInputBox{
   position:fixed;
-  z-index: 3;
+  z-index: 5;
   top:10%;
   left:20px;
   max-width:200px;
   max-height:10px;
   font-family:'Helvetica Neue';
-  /*visibility:hidden;*/
-  opacity: 0;
+  /*opacity: 0;*/
   transition: all 0.5s ease-in;
   
 }
@@ -69,7 +68,7 @@ body{
   border-radius:5px;
   border-style:unset;
   background-color: white;
-  opacity: 0;
+  opacity: 1;
   transition: all 0.5s ease-in;
 }
 
@@ -80,7 +79,8 @@ body{
   left:280px;
   border-radius:5px;
   border-style:unset;
-  opacity: 0;
+  background-color: white;
+  opacity: 1;
   transition: all 0.5s ease-in;
 }
 
@@ -125,9 +125,11 @@ body{
 
 .addVideo{
   background-color:black;
+  position:fixed;
+  z-index: 5;
   color:grey;
   font-family:Geneva;
-  opacity: 0; 
+  /*opacity: 0;*/
 }
 
 .deletionIndicator{
@@ -187,7 +189,7 @@ iframe{
   height:100%;
 }
 
-.dropdown{
+.sizing{
   position:fixed;
   bottom:2%;
   z-index: 3;
@@ -196,28 +198,28 @@ iframe{
 }
 
 .s{
-  left:5px;
+  left:25px;
   position:fixed;
   z-index: 5;
 }
 
 .m{
-  left:30px;
+  left:50px;
   position:fixed;
   z-index: 5;
 }
 
 .l{
-  left:60px;
+  left:80px;
   position:fixed;
   z-index: 5;
 }
 
 #logo{
-width:20px;
-z-index: 2;
-margin-left:1%; 
-transition:width 1 ease-in;
+  width:20px;
+  z-index: 2;
+  margin-left:1%;
+  transition:width 1 ease-in;
 }
 
 #logo:hover{
@@ -240,8 +242,9 @@ transition:width 1 ease-in;
 
 <div id="navbar">
 
-<p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png" onclick="reveal()"></img></p>
-  
+<p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png" ></img></p>
+{{!-- <p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png" onclick="reveal()"></img></p> --}}
+
   <form method="POST" action={{data.username}}>
 
       <input class="addInputBox" type="text" name="link" value=""></input>
@@ -260,6 +263,7 @@ transition:width 1 ease-in;
 
 <body>
 
+
 <div>
 
   <form method="GET" action={{data.username}} id="deletionForm">
@@ -273,10 +277,9 @@ transition:width 1 ease-in;
 
 </div>
 
-  <button class="dropdown s" onclick="s()">s</button>
-  <button class="dropdown m " onclick="m()">m</button>
-  <button class="dropdown l" onclick="l()">l</button>
-
+  <button class="sizing s" onclick="s()">s</button>
+  <button class="sizing m " onclick="m()">m</button>
+  <button class="sizing l" onclick="l()">l</button>
 
 </body>
 </div>

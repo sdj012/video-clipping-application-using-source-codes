@@ -2,14 +2,15 @@
 
 <style>
   html{
-    height:100%;
+    height:100%; 
+    overflow-y: hidden;
   }
 
   body{ 
     scroll-behavior: unset;
     height:100%;
-
   }
+
 
   #video {
   position: fixed;
@@ -76,7 +77,7 @@
 
   .tempPlaylist {
     position:absolute;
-    z-index: 1;
+    z-index: 2;
     width:100%;
     height:100%;
     margin-top: 45%;
@@ -88,6 +89,15 @@
 
   #toLoginPage{
     position: fixed;
+    color:white;
+    top:10px;
+    right:120px;
+    
+  }
+
+  #toRegistrationPage{
+    position: fixed;
+    color:white;
     top:10px;
     right:20px;
   }
@@ -116,6 +126,22 @@
     height:100%;
   }
 
+  .text{
+    font-family: Helvetica;
+    font-weight: bold;
+    color:white;
+    opacity:0.6;
+
+    position:absolute;
+    z-index: 2;
+    width:100%;
+    height:100%;
+    text-align: center;
+    margin-top:33%;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
 </style>
 
 <head>
@@ -135,7 +161,7 @@
 
     <form method="POST" action="/">
 
-        <input class="addInputBox" type="text" name="link" value=""></input>
+        <input class="addInputBox" type="text" name="link" value="" placeholder="<iframe>....</iframe>"></input>
 
         <button type="submit" class="addVideo addButton btn btn-outline-secondary btn btn-sm btn-dark">+</button>
     
@@ -146,11 +172,12 @@
 </div>
 
 
-  <a id="toLoginPage" style="color:white" href="login">login</a>
+  <a id="toLoginPage" href="login">login /</a>
+  <a id="toRegistrationPage" href="registration"> create page</a>
 
 <body>
   
-
+  <div class="text">Your video will appear here. Create a page to start!</div>
   <div class="tempPlaylist">{{{tempPlayList}}}</div>
 
 
