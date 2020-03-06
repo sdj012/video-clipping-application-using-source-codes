@@ -167,7 +167,6 @@ app.post('/',(req,res)=>{
 })
 
 app.get('/login',(req,res,next)=>{
-
   return res.render('login',{layout:false});
 });
 
