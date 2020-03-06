@@ -3,7 +3,7 @@
 <style>
   html{
     height:100%; 
-    overflow-y: hidden;
+    overflow-y:auto;
   }
 
   body{ 
@@ -13,12 +13,12 @@
 
 
   #video {
-  position: fixed;
-  z-index: 0;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
+    position: fixed;
+    z-index: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
   }
 
   .content {
@@ -53,11 +53,15 @@
 
   .removeBoxes{
     position:fixed;
-    top:10%;
-    margin-left:280px;
+    z-index: 5;
+    top:12%;
+    left:280px;
     border-radius:5px;
     border-style:unset;
-  }
+    background-color: white;
+    opacity: 1;
+    transition: all 0.5s ease-in;
+}
 
 
   .addVideo{
@@ -66,13 +70,6 @@
     font-family:Geneva;
     opacity: 0.8; 
     
-  }
-
-  .removeButton{
-    visibility: hidden;
-    position:fixed;
-    top:30;
-    left:265px;
   }
 
   .tempPlaylist {
@@ -142,6 +139,58 @@
     margin-right:auto;
   }
 
+  #logo{
+    width:2%;
+    z-index: 1;
+    margin-left:1%;
+  }
+
+  .sizing{
+    position:fixed;
+    bottom:2%;
+    z-index: 3;
+    color:white;
+    background-color: black;
+  }
+
+  .s{
+    left:25px;
+    position:fixed;
+    z-index: 5;
+  }
+
+  .m{
+    left:50px;
+    position:fixed;
+    z-index: 5;
+  }
+
+  .l{
+    left:80px;
+    position:fixed;
+    z-index: 5;
+  }
+
+  .deletionIndicator{
+  opacity: 0;
+  transition: all 0.5s ease-in;
+  margin-left:-1.5%;
+  z-index: 5;
+  }
+
+  .removeButton{
+  z-index: 5;
+  position:fixed;
+  top:12%;
+  left:350px;
+  border-radius:5px;
+  border-style:unset;
+  color:white;
+  background-color: black;
+  opacity: 0;
+  transition: all 0.5s ease-in;
+  }
+
 </style>
 
 <head>
@@ -155,7 +204,7 @@
   <source src="../Dust.mp4" type="video/mp4">
   </video> --}}
 
-  <p class="content" style="color:white">embed.<img width="2%" style="z-index: 1; margin-left:1%" src="../embedLogoWhite.png"></img></p>
+  <p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png"></img></p>
 
     <div>
 
@@ -166,19 +215,29 @@
         <button type="submit" class="addVideo addButton btn btn-outline-secondary btn btn-sm btn-dark">+</button>
     
     </form>
+
+        <button class="addVideo removeBoxes" onclick="displayBoxes()">-</button>
         
     </div>
 
 </div>
 
 
-  <a id="toLoginPage" href="login">login /</a>
+  <a id="toLoginPage" href="login">login • </a>
   <a id="toRegistrationPage" href="registration"> create page</a>
 
 <body>
+
+  <form method="GET" action="/" id="deletionForm">
   
-  <div class="text">Your video will appear here. Create a page to start!</div>
-  <div class="tempPlaylist">{{{tempPlayList}}}</div>
+    <div class="tempPlaylist">{{{tempPlayList}}}</div>
+    <button class="removeButton" value="submit">remove video(s)</button>
+
+  </form>
+
+  <button class="sizing s" onclick="s()">s</button>
+  <button class="sizing m " onclick="m()">m</button>
+  <button class="sizing l" onclick="l()">l</button>
 
 
 </body>

@@ -11,7 +11,7 @@ const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
 var crypto = require("crypto");
-
+// var sessionStorage = require('sessionstorage');
 const connectionString=process.env.MONGODB_URI
 
 const db=require('../lib/db')
@@ -22,7 +22,6 @@ var playlist=[];
 var HTTP_PORT = process.env.PORT || 3000;
 var loggedInUser;
 var List=[];
-var embed="";
 
 // call this function after the http server starts listening for requests
 
@@ -35,7 +34,10 @@ function onHttpStart() {
   .catch((err) => {
     console.error(err);
   });
-}
+
+  embed="";
+  }
+
 app.engine('.hbs',hbstempl({extname:'.hbs'}))
 app.set('views',__dirname+'/views');
 app.set('view engine','.hbs');
@@ -53,40 +55,108 @@ app.use(session({
   secret:'very secret', //sign the sessions to prevent tamperings
   resave: true,//if wans't changed, stays active
   saveUninitialized:false,//to avoid getting empty objects in db
-  store: new MongoStore({mongooseConnection: mongoose.connection})
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  cookie: { maxAge: 10000 }
 }))
 
 
 app.get('/',(req,res)=>{
   
-  console.log("get route '/' hit ");
-  var i;
+  console.log(" hit: '/' get ");
 
-  embed="";
+  if(req.query && req.query.selectedVideos){
 
-  for(i of List){
-    embed += i;
-  }
+    console.log("query route hit");
 
-  List=[];
+    console.log("selected Videos: " + req.query.selectedVideos.length)
+  
+      for(i=0;i<req.session.data.length;i++){
+
+          console.log("hit: for loop")
+
+        for(j=0;j<req.query.selectedVideos.length;j++){
+
+          if(req.session.data[i].includes(req.query.selectedVideos[j])){
+            req.session.data.splice(i,1);
+          }
+
+        }
+      }
+
+    }
+
+
+  // sessionStorage.setItem('testItem','test item');
+
+  // console.log("test item found (sS) " + sessionStorage.getItem('testItem'));
+
+  // if (sessionStorage.length>0){
+
+  //   console.log("session Storage length " + sessionStorage.length);
+  //   console.log("key : " + sessionStorage.key(0));
+
+  //     // embed=sessionStorage.getItem('embedCode');
+
+  //     let key;
+
+  //     for (var i=0;i<sessionStorage.length;i++){
+  //       // key=sessionStorage.key(i);
+  //       console.log(" index: " + i);
+  //       // embed+=sessionStorage.getItem(sessionStorage.key(i));
+  //       console.log("embed: " + embed)
+  //     }
+
+
+  // }
+  
+      // else {
+      //   embed="";
+      //   console.log("embedCode not found (sS) ")
+
+      // }
+
+  // var i;
+  // for(i of List){
+  //   embed += i;
+  // }
+
+  // List=[];
+
+  embed=req.session.data;
 
   return res.render('index',{tempPlayList:embed,error:req.query.error,layout:false})
 });
 
+
+
 app.post('/',(req,res)=>{
 
-  var link=req.body.link;
   
+  console.log("post '/' hit ")
+
+  var link=req.body.link;
+
+  if (!req.session.data) {
+    req.session.data = [];
+  }
+
   var sliceBeg=link.indexOf(" width");
 
   var stringHalf=link.slice(0,sliceBeg);
   var string2ndHalf=link.slice(sliceBeg);
   
-  var finalEmbedCode="<div class='video'><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item'" +string2ndHalf +"</div></div>"
+  var itemId = crypto.randomBytes(20).toString('hex');
+
+  var finalEmbedCode="<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+itemId+"'><br><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+">class='embed-responsive-item'" +string2ndHalf +"</div><br></div>"
+
+
+  req.session.data.push(finalEmbedCode);
+  
+  // sessionStorage.setItem(itemId,finalEmbedCode);
+
+  console.log(itemId + " : " + finalEmbedCode )
 
   List.push(finalEmbedCode);
-
-  console.log("post '/' hit ")
 
   link="";
 
@@ -100,6 +170,7 @@ app.get('/login',(req,res,next)=>{
 
   return res.render('login',{layout:false});
 });
+
 
 app.post('/login',
   passport.authenticate('local'),
@@ -287,6 +358,7 @@ app.use((req,res,next)=>{
 
 
 app.use((err,req, res, next)=>{
+  console.log(err);
   return res.render('error',{layout:false})
 })
 

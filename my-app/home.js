@@ -2,18 +2,30 @@
   function displayBoxes(){
 
     let elements=document.getElementsByClassName('deletionIndicator');
+    
     for(element of elements){
-      element.style.opacity=1;
+
+      if(element.style.opacity==0)element.style.opacity=1
+      else element.style.opacity=0;
+
     };
 
     let removebutton=document.getElementsByClassName('removeButton');
+    
     for(element of removebutton){
-      element.style.opacity=1;
+
+      if(element.style.opacity==0)element.style.opacity=1
+      else element.style.opacity=0;
+
     };
 
     let closebutton=document.getElementsByClassName('closeButton');
+
     for(element of closebutton){
-      element.style.opacity=1;
+      
+      if(element.style.opacity==0)element.style.opacity=1
+      else element.style.opacity=0;
+      
     };
     console.log("displayBoxes hit")
 
