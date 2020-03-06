@@ -11,7 +11,7 @@ const cookieParser=require('cookie-parser');
 const auth = require('./auth');
 const hbstempl=require('express-handlebars');
 var crypto = require("crypto");
-// var sessionStorage = require('sessionstorage');
+
 const connectionString=process.env.MONGODB_URI
 
 const db=require('../lib/db')
@@ -21,7 +21,6 @@ var videos=[];
 var playlist=[];
 var HTTP_PORT = process.env.PORT || 3000;
 var loggedInUser;
-var List=[];
 
 // call this function after the http server starts listening for requests
 
@@ -56,13 +55,15 @@ app.use(session({
   resave: true,//if wans't changed, stays active
   saveUninitialized:false,//to avoid getting empty objects in db
   store: new MongoStore({mongooseConnection: mongoose.connection}),
-  cookie: { maxAge: 10000 }
+  cookie: {maxAge: 10000},
 }))
 
 
 app.get('/',(req,res)=>{
   
   console.log(" hit: '/' get ");
+
+  console.log(req.session.data.length);
 
   if(req.query && req.query.selectedVideos){
 
@@ -122,9 +123,8 @@ app.get('/',(req,res)=>{
 
   // List=[];
 
-  embed=req.session.data;
 
-  return res.render('index',{tempPlayList:embed,error:req.query.error,layout:false})
+  return res.render('index',{tempPlayList:JSON.stringify(req.session.data),error:req.query.error,layout:false})
 });
 
 
@@ -149,14 +149,9 @@ app.post('/',(req,res)=>{
 
   var finalEmbedCode="<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+itemId+"'><br><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+">class='embed-responsive-item'" +string2ndHalf +"</div><br></div>"
 
-
   req.session.data.push(finalEmbedCode);
-  
-  // sessionStorage.setItem(itemId,finalEmbedCode);
 
   console.log(itemId + " : " + finalEmbedCode )
-
-  List.push(finalEmbedCode);
 
   link="";
 
@@ -357,7 +352,6 @@ app.use((req,res,next)=>{
 
 
 app.use((err,req, res, next)=>{
-  console.log(err);
   return res.render('error',{layout:false})
 })
 
