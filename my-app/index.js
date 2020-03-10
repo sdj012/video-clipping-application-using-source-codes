@@ -1,5 +1,4 @@
 require('dotenv').config({path:'my-app/.env'});
-const url = require('url')
 const express = require("express");
 const createError=require('http-errors');
 const passport = require('passport');
@@ -67,15 +66,15 @@ app.get('/',(req,res)=>{
   //   req.session.data = [];
   // }
 
-  tempPlayList=[];
+  // tempPlayList=[];
 
-  if(req.session.data)tempPlayList.push(req.session.data);
+  // if(req.session.data)tempPlayList.push(req.session.data);
 
-  console.log("req.session.data length:" + req.session.data.length)
+  // console.log("req.session.data length:" + req.session.data.length)
 
-  console.log("req.session.data:" + req.session.data);
+  // console.log("req.session.data:" + req.session.data);
 
-  console.log("tempPlayList:" + JSON.parse(JSON.stringify(tempPlayList)));
+  // console.log("tempPlayList:" + JSON.parse(JSON.stringify(tempPlayList)));
 
   // if(req.sessions.data && req.query.selectedVideos){
 
