@@ -1,4 +1,5 @@
 require('dotenv').config({path:'my-app/.env'});
+const url = require('url')
 const express = require("express");
 const createError=require('http-errors');
 const passport = require('passport');
@@ -12,7 +13,7 @@ const auth = require('./auth');
 const hbstempl=require('express-handlebars');
 var crypto = require("crypto");
 
-const connectionString=process.env.MONGODB_URI
+const connectionString=process.env.MONGODB_URI;
 
 const db=require('../lib/db')
 var app = express();
@@ -55,7 +56,6 @@ app.use(session({
   resave: true,//if wans't changed, stays active
   saveUninitialized:false,//to avoid getting empty objects in db
   store: new MongoStore({mongooseConnection: mongoose.connection}),
-  cookie: {maxAge: 10000},
 }))
 
 
@@ -63,75 +63,66 @@ app.get('/',(req,res)=>{
   
   console.log(" hit: '/' get ");
 
-  console.log(req.session.data.length);
+  // if (req.session.data.length==0) {
+  //   req.session.data = [];
+  // }
 
-  if(req.query && req.query.selectedVideos){
+  tempPlayList=[];
 
-    console.log("query route hit");
+  if(req.session.data)tempPlayList.push(req.session.data);
 
-    console.log("selected Videos: " + req.query.selectedVideos.length)
+  console.log("req.session.data length:" + req.session.data.length)
+
+  console.log("req.session.data:" + req.session.data);
+
+  console.log("tempPlayList:" + JSON.parse(JSON.stringify(tempPlayList)));
+
+  // if(req.sessions.data && req.query.selectedVideos){
+
+  //   console.log("query route hit");
+
+  //   console.log("length: selected Videos: " + req.query.selectedVideos.length)
+  //   console.log("selected Videos: " + req.query.selectedVideos)
   
-      for(i=0;i<req.session.data.length;i++){
+  //     for(i=0;i<tempPlayList.length;i++){
 
-          console.log("hit: for loop")
+  //         console.log("hit: for loop")
 
-        for(j=0;j<req.query.selectedVideos.length;j++){
+  //       for(j=0;j<req.query.selectedVideos.length;j++){
 
-          if(req.session.data[i].includes(req.query.selectedVideos[j])){
-            req.session.data.splice(i,1);
-          }
+  //         if(tempPlayList[i].includes(req.query.selectedVideos[j])){
+  //           tempPlayList.splice(i,1);
+  //         }
 
-        }
-      }
-
-    }
-
-
-  // sessionStorage.setItem('testItem','test item');
-
-  // console.log("test item found (sS) " + sessionStorage.getItem('testItem'));
-
-  // if (sessionStorage.length>0){
-
-  //   console.log("session Storage length " + sessionStorage.length);
-  //   console.log("key : " + sessionStorage.key(0));
-
-  //     // embed=sessionStorage.getItem('embedCode');
-
-  //     let key;
-
-  //     for (var i=0;i<sessionStorage.length;i++){
-  //       // key=sessionStorage.key(i);
-  //       console.log(" index: " + i);
-  //       // embed+=sessionStorage.getItem(sessionStorage.key(i));
-  //       console.log("embed: " + embed)
+  //       }
   //     }
-
+    
+  //   return res.redirect('/');
 
   // }
+
+    return res.render('index',{tempPlayList:tempPlayList,error:req.query.error,layout:false})
+
+  // else {
+
+  // console.log("req.session.data:" + req.session.data)
+  // console.log("req.query.selectedVideos:" + req.query.selectedVideos)
+
+  // if (req.session.data.length==0) {
+  //   req.session.data = [];
+  //   console.log("rendering: empty index");
+  //   return res.render('index',{tempPlayList:JSON.stringify(req.session.data),error:req.query.error,layout:false})
+  // } else {
+
   
-      // else {
-      //   embed="";
-      //   console.log("embedCode not found (sS) ")
-
-      // }
-
-  // var i;
-  // for(i of List){
-  //   embed += i;
   // }
 
-  // List=[];
-
-
-  return res.render('index',{tempPlayList:JSON.stringify(req.session.data),error:req.query.error,layout:false})
 });
 
 
 
 app.post('/',(req,res)=>{
 
-  
   console.log("post '/' hit ")
 
   var link=req.body.link;
@@ -140,7 +131,7 @@ app.post('/',(req,res)=>{
     req.session.data = [];
   }
 
-  var sliceBeg=link.indexOf(" width");
+  var sliceBeg=link.indexOf("width");
 
   var stringHalf=link.slice(0,sliceBeg);
   var string2ndHalf=link.slice(sliceBeg);
@@ -335,12 +326,12 @@ app.post('/home/:username',(req,res,next)=>{
       }
     );
     
-  })
+})
 
 
 app.post('/home',(req,res)=>{
 
-res.sendFile('home.html',{root:__dirname})
+  res.sendFile('home.html',{root:__dirname})
 
 });
 
