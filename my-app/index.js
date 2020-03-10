@@ -66,7 +66,7 @@ app.get('/',(req,res)=>{
   //   req.session.data = [];
   // }
 
-  // tempPlayList=[];
+  tempPlayList=[];
 
   // if(req.session.data)tempPlayList.push(req.session.data);
 
