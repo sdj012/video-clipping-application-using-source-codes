@@ -62,7 +62,7 @@ app.get('/',(req,res)=>{
   
   console.log(" hit: '/' get ");
 
-  if (req.session.data.length==0) {
+  if (!req.session.data) {
     req.session.data = [];
   }
 
