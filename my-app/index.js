@@ -62,14 +62,13 @@ app.get('/',(req,res)=>{
   
   console.log(" hit: '/' get ");
 
+  if (req.session.data.length==0) {
+    req.session.data = [];
+  }
+
   console.log("GET '/' req.session.data: " + req.session.data); //videos
 
   console.log("GET '/' req.session.data length: " + req.session.data.length); //length: videos
-
-
-  // if (req.session.data.length==0) {
-    //   req.session.data = [];
-    // }
     
     tempPlayList=[];  
 
