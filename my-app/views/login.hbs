@@ -11,12 +11,13 @@
 
   #caption{
     color: white;
-    position: absolute;
+    position: fixed;
     font-size:medium;
     opacity: 0.5;
-    left:20%;
-    top:40%;
     z-index: 1;
+    bottom:10%;
+    right:9%;
+    width:10%;
   }
 
   #video {
@@ -29,8 +30,12 @@
     min-height:100%;
   }
 
-  
-
+  img{
+    position: fixed;
+    bottom:15%;
+    right:10%;
+    width:10%;
+  }
 
 </style>
 
@@ -63,7 +68,9 @@
       </div> --}}
   
     </div>
-  </div>
+</div>
+    <p id="caption">peaceful streaming</p>
+    <img class="fadeInDown" src="../TVGraphic.png">
 
 <script src="index.js"></script>
 </body>

@@ -1,5 +1,26 @@
 <!doctype html>
 
+<style>
+
+  #caption{
+    color: white;
+    position: fixed;
+    font-size:medium;
+    opacity: 0.5;
+    z-index: 1;
+    bottom:10%;
+    right:9%;
+    width:10%;
+  }
+
+  img{
+    position: fixed;
+    bottom:15%;
+    right:10%;
+    width:10%;
+  }
+</style>
+
 <link rel="stylesheet" href="index.css">
 
 <div class="wrapper fadeInDown">
@@ -8,8 +29,8 @@
         <br>
         <br>
         <input type="text" class="fadeIn second" name="username" placeholder="username">
-        <input type="password" class="fadeIn third" name="password" placeholder="Password">
-        <input type="text" class="fadeIn second" name="email" placeholder="Email Address">
+        <input type="password" class="fadeIn third" name="password" placeholder="password(8-15 digits)">
+        <input type="text" class="fadeIn second" name="email" placeholder="email address">
         <br>
         <br>
         <input type="submit" class="fadeIn fourth" value="submit">
@@ -18,4 +39,8 @@
   
     </div>
   </div>
+      <p id="caption">peaceful streaming</p>
+      <img class="fadeInDown" src="../TVGraphic.png">
+  
+
 <script src="index.js"></script>

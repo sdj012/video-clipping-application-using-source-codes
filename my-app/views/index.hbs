@@ -22,11 +22,11 @@
   }
 
   .content {
-    z-index: 1;
+    z-index: 3;
     position: fixed;
-    top:1%;
-    width: 100%;
-    padding: 20px;
+    top:10px;
+    left:20px;
+    display:inline-block;
     font-size:larger;
     color: white;
   }
@@ -45,31 +45,37 @@
 
   .addButton{
     position:fixed;
-    top:12%;
+    top:9.5%;
     left:240px;
-    border-radius:5px;
-    border-style:unset;
+    min-width:1.5%;
+    min-height:3%;
+    border-radius:10px;
+    border-width:3px;
+    border-color:black;
+    background-color: black;
   }
 
   .removeBoxes{
     position:fixed;
-    z-index: 5;
-    top:12%;
-    left:280px;
-    border-radius:5px;
-    border-style:unset;
-    background-color: white;
+    top:9.5%;
+    left:285px;
+    min-width:1.5%;
+    min-height:3%;
+    border-radius:10px;
+    border-width: 3px;
+    border-color: black;
+    background-color:black;
     opacity: 1;
     transition: all 0.5s ease-in;
 }
 
 
   .addVideo{
-    background-color:black;
-    color:grey;
+    /*background-color:black;*/
+    color:white;
     font-family:Geneva;
-    opacity: 0.8; 
-    
+    font-size:xx-large;
+    opacity: 0.9;
   }
 
   .tempPlaylist {
@@ -83,6 +89,8 @@
     margin-right:-50%;
     transform:translate(-50%,-50%);
   }
+
+ 
 
   #toLoginPage{
     position: fixed;
@@ -128,7 +136,6 @@
     font-weight: bold;
     color:white;
     opacity:0.6;
-
     position:absolute;
     z-index: 2;
     width:100%;
@@ -142,7 +149,7 @@
   #logo{
     width:2%;
     z-index: 1;
-    margin-left:1%;
+    margin-right:1px;
   }
 
   .sizing{
@@ -188,13 +195,16 @@
   color:white;
   background-color: black;
   opacity: 0;
+  font-size:medium;
   transition: all 0.5s ease-in;
   }
+
 
 </style>
 
 <head>
 <link rel="stylesheet" href="../index.css">
+{{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> --}}
 </head>
 
 <div>
@@ -204,24 +214,23 @@
   <source src="../Dust.mp4" type="video/mp4">
   </video> --}}
 
-  <p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png"></img></p>
+  <p class="content" style="color:white">embed.</p>
+  {{!-- <img id="logo" src="../embedLogoWhite.png"></img> --}}
 
-    <div>
+   <div>
 
     <form method="POST" action="/">
 
         <input class="addInputBox" type="text" name="link" value="" placeholder="<iframe>....</iframe>"></input>
 
-        <button type="submit" class="addVideo addButton btn btn-outline-secondary btn btn-sm btn-dark">+</button>
+        <button type="submit" class="addVideo addButton">+</button>
     
     </form>
 
         <button class="addVideo removeBoxes" onclick="displayBoxes()">-</button>
         
     </div>
-
-</div>
-
+  </div>
 
   <a id="toLoginPage" href="login">login • </a>
   <a id="toRegistrationPage" href="registration"> create page</a>
@@ -242,7 +251,6 @@
 
 </body>
 </div>
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

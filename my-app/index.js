@@ -62,13 +62,24 @@ app.get('/',(req,res)=>{
   
   console.log(" hit: '/' get ");
 
+  console.log("GET '/' req.session.data: " + req.session.data); //videos
+
+  console.log("GET '/' req.session.data length: " + req.session.data.length); //length: videos
+
+
   // if (req.session.data.length==0) {
-  //   req.session.data = [];
-  // }
+    //   req.session.data = [];
+    // }
+    
+    tempPlayList=[];  
 
-  tempPlayList=[];
+    for(i=0;i<req.session.data.length;i++){
 
-  // if(req.session.data)tempPlayList.push(req.session.data);
+      tempPlayList.push(req.session.data[i]);
+
+    }
+    
+    console.log("GET '/' tempPlayList: " + tempPlayList)
 
   // console.log("req.session.data length:" + req.session.data.length)
 
@@ -76,31 +87,67 @@ app.get('/',(req,res)=>{
 
   // console.log("tempPlayList:" + JSON.parse(JSON.stringify(tempPlayList)));
 
-  // if(req.sessions.data && req.query.selectedVideos){
+  if(req.session.data && req.query.selectedVideos){
 
-  //   console.log("query route hit");
+    ids=[]
+    ids.push(req.query.selectedVideos)
 
-  //   console.log("length: selected Videos: " + req.query.selectedVideos.length)
-  //   console.log("selected Videos: " + req.query.selectedVideos)
+    console.log("query route hit");
+
+    console.log("length selected Videos: " + ids.length)
+    console.log("selected Videos: " + ids)
   
-  //     for(i=0;i<tempPlayList.length;i++){
+      // for(i=0;i<tempPlayList.length;i++){
 
-  //         console.log("hit: for loop")
+      //     console.log("hit: for loop")
 
-  //       for(j=0;j<req.query.selectedVideos.length;j++){
+      //   for(j=0;j<ids.length;j++){
 
-  //         if(tempPlayList[i].includes(req.query.selectedVideos[j])){
-  //           tempPlayList.splice(i,1);
-  //         }
+      //       console.log("hit: second for loop")
 
-  //       }
-  //     }
+      //       console.log("tempPlaylist[i]: " +  tempPlayList[i])
+
+      //       console.log("ids[j]: " +  ids[j])
+
+      //     if(tempPlayList[i].includes(ids[j])){
+
+      //       console.log("ACKNOWLEDGED ID SEARCH")
+      //       console.log("Deleting: " + ids[j])
+      //       tempPlayList.splice(i,1);
+
+      //     }
+
+      //   }
+      // }
+
+      for(i=0;i<req.session.data.length;i++){
+
+        console.log("hit: for loop")
+
+      for(j=0;j<ids.length;j++){
+
+          console.log("hit: second for loop")
+
+          console.log("req.session.data[i]: " +  req.session.data[i])
+
+          console.log("ids[j]: " +  ids[j])
+
+        if(req.session.data[i].includes(ids[j])){
+
+          console.log("ACKNOWLEDGED ID SEARCH")
+          console.log("Deleting: " + ids[j])
+          req.session.data.splice(i,1);
+
+        }
+
+      }
+    }
     
   //   return res.redirect('/');
 
-  // }
+    }
 
-    return res.render('index',{tempPlayList:tempPlayList,error:req.query.error,layout:false})
+    return res.render('index',{tempPlayList:req.session.data,error:req.query.error,layout:false})
 
   // else {
 
@@ -126,7 +173,7 @@ app.post('/',(req,res)=>{
 
   var link=req.body.link;
 
-  if (!req.session.data) {
+  if (!req.session.data) { //create req.session.data
     req.session.data = [];
   }
 
@@ -140,6 +187,8 @@ app.post('/',(req,res)=>{
   var finalEmbedCode="<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+itemId+"'><br><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+">class='embed-responsive-item'" +string2ndHalf +"</div><br></div>"
 
   req.session.data.push(finalEmbedCode);
+
+  console.log("req.session.data " + req.session.data)
 
   console.log(itemId + " : " + finalEmbedCode )
 
@@ -216,6 +265,7 @@ app.get('/logout',(req,res)=>{
 
 
 app.get('/home/:username',(req,res)=>{
+
   if (loggedInUser===req.params.username) {
 
   //update data
@@ -262,34 +312,44 @@ app.get('/home/:username',(req,res)=>{
     }
 
   UserModel.find(
+
     {username:req.params.username },
+
     function(err, user) {
-    console.log("loading videos")
-    if (err) throw err;
-    variable=user[0];
-    videos=[];
-    playlist=[];
 
-    if(user[0]){
-    var data=JSON.parse(JSON.stringify(user[0]))
+        console.log("loading videos")
 
-    function addToArray(item){
-      videos.push(item);
-    }
+        console.log(user[0])
 
-    function addToPlaylist(item){
-      playlist.push("<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+item[1]+"'><br>"+ item[0] +"<br></div>");
-    };
+        if (err) throw err;
+
+        variable=user[0];
+        videos=[];
+        playlist=[];
+
+      if(user[0]){
+
+        var data=JSON.parse(JSON.stringify(user[0]))
+
+        function addToArray(item){
+          videos.push(item);
+        }
+
+        function addToPlaylist(item){
+          playlist.push("<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+item[1]+"'><br>"+ item[0] +"<br></div>");
+        };
 
 
-    if(data.videos){
-    data.videos.forEach(addToArray);
-    videos.forEach(addToPlaylist);
-    }
-  }
+        if(data.videos){
 
-  res.render('home',{playlist:playlist, data:variable,layout:false});
-  })
+          data.videos.forEach(addToArray);
+          videos.forEach(addToPlaylist);
+
+        }
+      }
+
+      res.render('home',{playlist:playlist, data:variable,layout:false});
+    })
 
   } else {
     res.redirect("/"); 

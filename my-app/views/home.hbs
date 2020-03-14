@@ -23,16 +23,6 @@ body{
   min-height: 100%;
 }
 
-.content {
-  z-index: 1;
-  position: fixed;
-  top:1%;
-  width: 100%;
-  padding: 20px;
-  font-size:larger;
-  color: white;
-}
-
 .logoutLink{
   position: fixed;
   top:10px;
@@ -44,6 +34,16 @@ body{
 .logoutLink:hover{
   color:white;
   font-weight:bolder;
+}
+
+.content {
+  z-index: 3;
+  position: fixed;
+  top:10px;
+  left:20px;
+  display:inline-block;
+  font-size:larger;
+  color: white;
 }
 
 .addInputBox{
@@ -61,26 +61,37 @@ body{
 
 .addButton{
   position:fixed;
-  z-index: 5;
-  top:12%;
+  top:9.5%;
   left:240px;
-  border-radius:5px;
-  border-style:unset;
-  background-color: white;
-  opacity: 1;
-  transition: all 0.5s ease-in;
+  min-width:1.5%;
+  min-height:3%;
+  border-radius:10px;
+  border-width:3px;
+  border-color:black;
+  background-color: black;
 }
 
 .removeBoxes{
   position:fixed;
-  z-index: 5;
-  top:12%;
-  left:280px;
-  border-radius:5px;
-  border-style:unset;
-  background-color: white;
+  top:9.5%;
+  left:285px;
+  min-width:1.5%;
+  min-height:3%;
+  border-radius:10px;
+  border-width: 3px;
+  border-color: black;
+  background-color:black;
   opacity: 1;
   transition: all 0.5s ease-in;
+}
+
+
+.addVideo{
+  /*background-color:black;*/
+  color:white;
+  font-family:Geneva;
+  font-size:xx-large;
+  opacity: 0.9; 
 }
 
 .removeButton{
@@ -216,14 +227,14 @@ iframe{
 
 #logo{
   width:2%;
-  z-index: 2;
-  margin-left:1%;
-  transition:width 1 ease-in;
+  z-index: 1;
+  margin-right:1px;
 }
 
 #logo:hover{
   width:21px;
 }
+
   
 
 </style>
@@ -241,7 +252,7 @@ iframe{
 
 <div id="navbar">
 
-<p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png" ></img></p>
+<p class="content" style="color:white">embed</p>
 {{!-- <p class="content" style="color:white">embed.<img id="logo" src="../embedLogoWhite.png" onclick="reveal()"></img></p> --}}
 
   <form method="POST" action={{data.username}}>
