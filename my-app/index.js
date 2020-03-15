@@ -80,11 +80,6 @@ app.get('/',(req,res)=>{
     
     console.log("GET '/' tempPlayList: " + tempPlayList)
 
-  // console.log("req.session.data length:" + req.session.data.length)
-
-  // console.log("req.session.data:" + req.session.data);
-
-  // console.log("tempPlayList:" + JSON.parse(JSON.stringify(tempPlayList)));
 
   if(req.session.data && req.query.selectedVideos){
 
@@ -96,28 +91,6 @@ app.get('/',(req,res)=>{
     console.log("length selected Videos: " + ids.length)
     console.log("selected Videos: " + ids)
   
-      // for(i=0;i<tempPlayList.length;i++){
-
-      //     console.log("hit: for loop")
-
-      //   for(j=0;j<ids.length;j++){
-
-      //       console.log("hit: second for loop")
-
-      //       console.log("tempPlaylist[i]: " +  tempPlayList[i])
-
-      //       console.log("ids[j]: " +  ids[j])
-
-      //     if(tempPlayList[i].includes(ids[j])){
-
-      //       console.log("ACKNOWLEDGED ID SEARCH")
-      //       console.log("Deleting: " + ids[j])
-      //       tempPlayList.splice(i,1);
-
-      //     }
-
-      //   }
-      // }
 
       for(i=0;i<req.session.data.length;i++){
 
@@ -142,25 +115,10 @@ app.get('/',(req,res)=>{
       }
     }
     
-  //   return res.redirect('/');
 
     }
 
     return res.render('index',{tempPlayList:req.session.data,error:req.query.error,layout:false})
-
-  // else {
-
-  // console.log("req.session.data:" + req.session.data)
-  // console.log("req.query.selectedVideos:" + req.query.selectedVideos)
-
-  // if (req.session.data.length==0) {
-  //   req.session.data = [];
-  //   console.log("rendering: empty index");
-  //   return res.render('index',{tempPlayList:JSON.stringify(req.session.data),error:req.query.error,layout:false})
-  // } else {
-
-  
-  // }
 
 });
 
@@ -183,7 +141,7 @@ app.post('/',(req,res)=>{
   
   var itemId = crypto.randomBytes(20).toString('hex');
 
-  var finalEmbedCode="<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+itemId+"'><br><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+">class='embed-responsive-item'" +string2ndHalf +"</div><br></div>"
+  var finalEmbedCode="<div class='video'><input type='checkbox' class='deletionIndicator' name='selectedVideos' value='"+itemId+"'><br><div class='embed-responsive embed-responsive-16by9'>"+stringHalf+" class='embed-responsive-item'" +string2ndHalf +"></div><br></div>"
 
   req.session.data.push(finalEmbedCode);
 
@@ -255,7 +213,7 @@ app.get('/registration',(req,res)=>{
 });
 
 app.get('/logout',(req,res)=>{
-  //passport automatically add function logout to req object. simple call it. It will clear the login session
+  //passport automatically adds function logout to req object. 
   req.logout();
   loggedInUser="";
   return res.redirect('/');
