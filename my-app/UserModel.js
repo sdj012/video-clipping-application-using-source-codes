@@ -15,7 +15,7 @@ const UserSchema=mongoose.Schema({
   },
   email:{
     type:String,
-    required:true,
+    required:false,
     trim:true, //removes trailing spaces
     lowercase:true,
     index:{unique:true},//ensures uniqueness

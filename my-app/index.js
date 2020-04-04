@@ -25,10 +25,10 @@ var loggedInUser;
 // call this function after the http server starts listening for requests
 
 function onHttpStart() {
-  console.log("Express http server listening on: " + HTTP_PORT);
+  // console.log("Express http server listening on: " + HTTP_PORT);
   db.connect(connectionString)
   .then(() => {
-    console.log('Connected to MongoDB');
+    // console.log('Connected to MongoDB');
   })
   .catch((err) => {
     console.error(err);
@@ -60,15 +60,15 @@ app.use(session({
 
 app.get('/',(req,res)=>{
   
-  console.log(" hit: '/' get ");
+  // console.log(" hit: '/' get ");
 
   if (!req.session.data) {
     req.session.data = [];
   }
 
-  console.log("GET '/' req.session.data: " + req.session.data); //videos
+  // console.log("GET '/' req.session.data: " + req.session.data); //videos
 
-  console.log("GET '/' req.session.data length: " + req.session.data.length); //length: videos
+  // console.log("GET '/' req.session.data length: " + req.session.data.length); //length: videos
     
     tempPlayList=[];  
 
@@ -78,7 +78,7 @@ app.get('/',(req,res)=>{
 
     }
     
-    console.log("GET '/' tempPlayList: " + tempPlayList)
+    // console.log("GET '/' tempPlayList: " + tempPlayList)
 
 
   if(req.session.data && req.query.selectedVideos){
@@ -86,28 +86,28 @@ app.get('/',(req,res)=>{
     ids=[]
     ids.push(req.query.selectedVideos)
 
-    console.log("query route hit");
+    // console.log("query route hit");
 
-    console.log("length selected Videos: " + ids.length)
-    console.log("selected Videos: " + ids)
+    // console.log("length selected Videos: " + ids.length)
+    // console.log("selected Videos: " + ids)
   
 
       for(i=0;i<req.session.data.length;i++){
 
-        console.log("hit: for loop")
+        // console.log("hit: for loop")
 
       for(j=0;j<ids.length;j++){
 
-          console.log("hit: second for loop")
+          // console.log("hit: second for loop")
 
-          console.log("req.session.data[i]: " +  req.session.data[i])
+          // console.log("req.session.data[i]: " +  req.session.data[i])
 
-          console.log("ids[j]: " +  ids[j])
+          // console.log("ids[j]: " +  ids[j])
 
         if(req.session.data[i].includes(ids[j])){
 
-          console.log("ACKNOWLEDGED ID SEARCH")
-          console.log("Deleting: " + ids[j])
+          // console.log("ACKNOWLEDGED ID SEARCH")
+          // console.log("Deleting: " + ids[j])
           req.session.data.splice(i,1);
 
         }
@@ -126,7 +126,7 @@ app.get('/',(req,res)=>{
 
 app.post('/',(req,res)=>{
 
-  console.log("post '/' hit ")
+  // console.log("post '/' hit ")
 
   var link=req.body.link;
 
@@ -145,9 +145,9 @@ app.post('/',(req,res)=>{
 
   req.session.data.push(finalEmbedCode);
 
-  console.log("req.session.data " + req.session.data)
+  // console.log("req.session.data " + req.session.data)
 
-  console.log(itemId + " : " + finalEmbedCode )
+  // console.log(itemId + " : " + finalEmbedCode )
 
   link="";
 
@@ -168,7 +168,7 @@ app.post('/login',
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
     loggedInUser=req.user.username;
-    console.log("login post route hit");
+    // console.log("login post route hit");
     return res.redirect('/home/' + req.user.username);
   }, 
   // By default, if auth fails, pp will respond with a 401 status. 
@@ -180,7 +180,7 @@ app.get('/favicon.ico',(req,res)=>{
 
 app.post('/registration', async (req,res,next)=>{
 
-  console.log("hit post route, trying to save "+ req.body.username);
+  // console.log("hit post route, trying to save "+ req.body.username);
 
   try{
 
@@ -228,21 +228,21 @@ app.get('/home/:username',(req,res)=>{
   //update data
       if(req.query && req.query.selectedVideos){
 
-      console.log("query route hit");
+      // console.log("query route hit");
 
       if(typeof req.query.selectedVideos === 'object'){
 
       req.query.selectedVideos.forEach(function find(video){
-      console.log("this is one video" + video);
+      // console.log("this is one video" + video);
       UserModel.findOneAndUpdate(
         {username:req.params.username},
         {$pull:{videos:{"1":video}}},
         {useFindAndModify:false},
         function(err) {
           if(err){
-          console.log(err);
+          // console.log(err);
           }else{
-          console.log("deleted")
+          // console.log("deleted")
           }
         }
       )})
@@ -255,9 +255,9 @@ app.get('/home/:username',(req,res)=>{
           {useFindAndModify:false},
           function(err) {
             if(err){
-            console.log(err);
+            // console.log(err);
             }else{
-            console.log("deleted")
+            // console.log("deleted")
             }
           }
         )
@@ -274,9 +274,9 @@ app.get('/home/:username',(req,res)=>{
 
     function(err, user) {
 
-        console.log("loading videos")
+        // console.log("loading videos")
 
-        console.log(user[0])
+        // console.log(user[0])
 
         if (err) throw err;
 
@@ -334,9 +334,9 @@ app.post('/home/:username',(req,res,next)=>{
       {useFindAndModify:false},
       function(err, doc) {
           if(err){
-          console.log(err);
+          // console.log(err);
           }else{ 
-          console.log("updated")
+          // console.log("updated")
           return res.redirect('/home/' + req.params.username);
           }
       }

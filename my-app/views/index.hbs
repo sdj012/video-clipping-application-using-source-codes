@@ -1,6 +1,7 @@
 <!doctype html>
 
 <style>
+  
   html{
     height:100%; 
     overflow-y:auto;
@@ -11,14 +12,97 @@
     height:100%;
   }
 
+  .tempPlaylist {
+    position:absolute;
+    z-index: 2;
+    width:100%;
+    height:100%;
+    margin-top: 130%;
+    margin-bottom:50%;
+    left:50%;
+    margin-right:-50%;
+    transform:translate(-50%,-50%);
+  }
 
-  #video {
-    position: fixed;
-    z-index: 0;
-    right: 0;
-    bottom: 0;
-    min-width: 100%;
-    min-height: 100%;
+  .menu{
+    position:fixed;
+    height:18%;
+    width:100%;
+    top:0;
+    background-color:black;
+    z-index: 3;
+  }
+
+  @media only screen (min-width: 501px) and (max-width: 800px) {
+
+      .tempPlaylist {
+        position:absolute;
+        z-index: 2;
+        width:100%;
+        height:100%;
+        margin-top: 100%;
+        margin-bottom:50%;
+        left:50%;
+        margin-right:-50%;
+        transform:translate(-50%,-50%);
+      }
+
+      .menu{
+        position:fixed;
+        height:18%;
+        width:100%;
+        top:0;
+        background-color:black;
+        z-index: 3;
+      }
+  }
+
+  @media only screen and (min-width: 801px) and (max-width: 1300px) {
+
+      .tempPlaylist {
+        position:absolute;
+        z-index: 2;
+        width:100%;
+        height:100%;
+        margin-top: 75%;
+        margin-bottom:50%;
+        left:50%;
+        margin-right:-50%;
+        transform:translate(-50%,-50%);
+      }
+
+       .menu{
+        position:fixed;
+        height:18%;
+        width:100%;
+        top:0;
+        background-color:black;
+        z-index: 3;
+      }
+  }
+
+  @media only screen and (min-width: 1301px){
+
+      .tempPlaylist {
+        position:absolute;
+        z-index: 2;
+        width:100%;
+        height:100%;
+        margin-top: 45%;
+        margin-bottom:50%;
+        left:50%;
+        margin-right:-50%;
+        transform:translate(-50%,-50%);
+      }
+
+      .menu{
+        position:fixed;
+        height:0%;
+        width:0%;
+        top:0;
+        background-color:black;
+        z-index: 0;
+      }
   }
 
   .content {
@@ -31,10 +115,12 @@
     color: white;
   }
 
+  /* menu */
+
   .addInputBox{
     position:fixed;
     z-index: 3;
-    top:10%;
+    top:5%;
     left:20px;
     max-width:200px;
     max-height:10px;
@@ -45,7 +131,8 @@
 
   .addButton{
     position:fixed;
-    top:9.5%;
+    z-index: 3;
+    top:4.5%;
     left:240px;
     min-width:1.5%;
     min-height:3%;
@@ -57,7 +144,8 @@
 
   .removeBoxes{
     position:fixed;
-    top:9.5%;
+    z-index:3;
+    top:4.5%;
     left:285px;
     min-width:1.5%;
     min-height:3%;
@@ -67,37 +155,44 @@
     background-color:black;
     opacity: 1;
     transition: all 0.5s ease-in;
-}
-
-
-  .addVideo{
-    /*background-color:black;*/
+  }
+  
+  .addVideo{ /* + - */
+    background-color:black;
     color:white;
     font-family:Geneva;
     font-size:xx-large;
     opacity: 0.9;
   }
 
-  .tempPlaylist {
-    position:absolute;
-    z-index: 2;
-    width:100%;
-    height:100%;
-    margin-top: 45%;
-    margin-bottom:50%;
-    left:50%;
-    margin-right:-50%;
-    transform:translate(-50%,-50%);
+  .deletionIndicator{
+    opacity: 0;
+    transition: all 0.5s ease-in;
+    margin-left:-1.5%;
+    z-index: 5;
   }
 
- 
+  .removeButton{
+    position:fixed;
+    z-index: 5;
+    top:12%;
+    left:350px;
+    border-radius:5px;
+    border-style:unset;
+    color:white;
+    background-color: black;
+    opacity: 0;
+    font-size:medium;
+    transition: all 0.5s ease-in;
+  }
 
+  /* Links */
   #toLoginPage{
     position: fixed;
     color:white;
     top:10px;
     right:120px;
-    
+    z-index: 3;
   }
 
   #toRegistrationPage{
@@ -105,13 +200,17 @@
     color:white;
     top:10px;
     right:20px;
+    z-index: 3;
   }
 
+
+/* video codes */
+
   .video{
+    width:60%;
+    height:60%;
     margin-left:auto;
     margin-right:auto;
-    width:50%;
-    height:50%;
     margin-bottom:25%;
   }
 
@@ -119,17 +218,21 @@
     position:relative;
     width:100%;
     height:100%;
-    z-index: 1;
     margin-left:auto;
     margin-right:auto;
+    z-index: 1;
   }
 
   .embed-responsive{
-    margin-left:auto;
-    margin-right:auto;
+    /*position:relative;*/
     width:100%;
     height:100%;
+    margin-left:auto;
+    margin-right:auto;
+
   }
+
+  /* acc */
 
   .text{
     font-family: Helvetica;
@@ -137,7 +240,6 @@
     color:white;
     opacity:0.6;
     position:absolute;
-    z-index: 2;
     width:100%;
     height:100%;
     text-align: center;
@@ -147,10 +249,13 @@
   }
 
   #logo{
-    width:2%;
-    z-index: 1;
-    margin-right:1px;
+    position: fixed;
+    width:100px;
+    left:35px;
+    margin-bottom:20px;
   }
+
+  /*sizing*/
 
   .sizing{
     position:fixed;
@@ -164,93 +269,85 @@
     left:25px;
     position:fixed;
     z-index: 5;
+    border-radius: 12px;
+    border-color:black;
   }
 
   .m{
     left:50px;
     position:fixed;
     z-index: 5;
+    border-radius: 12px;
+    border-color:black;
   }
 
   .l{
     left:80px;
     position:fixed;
     z-index: 5;
+    border-radius: 12px;
+    border-color:black;
   }
-
-  .deletionIndicator{
-  opacity: 0;
-  transition: all 0.5s ease-in;
-  margin-left:-1.5%;
-  z-index: 5;
-  }
-
-  .removeButton{
-  z-index: 5;
-  position:fixed;
-  top:12%;
-  left:350px;
-  border-radius:5px;
-  border-style:unset;
-  color:white;
-  background-color: black;
-  opacity: 0;
-  font-size:medium;
-  transition: all 0.5s ease-in;
-  }
-
+  
 
 </style>
 
 <head>
 <link rel="stylesheet" href="../index.css">
-{{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> --}}
 </head>
 
-<div>
-<div>
+<div class="container">
 
-  {{!-- <video playbackRate=0.3 autoplay="autoplay" loop="true" mute="true" id="video">
-  <source src="../Dust.mp4" type="video/mp4">
-  </video> --}}
+  <div class="menu">
 
-  <p class="content" style="color:white">embed.</p>
-  {{!-- <img id="logo" src="../embedLogoWhite.png"></img> --}}
+    <div>
 
-   <div>
+    {{!-- <p class="content" style="color:white">embed.</p> --}} --}}
+    {{!-- <p class="content" style="color:white">
+      <img id="logo" src="../embedLogoWhite.png"></img>
+    </p> --}}
 
-    <form method="POST" action="/">
+    <div class="form">
 
-        <input class="addInputBox" type="text" name="link" value="" placeholder="<iframe>....</iframe>"></input>
+      <form method="POST" action="/">
 
-        <button type="submit" class="addVideo addButton">+</button>
-    
-    </form>
+          <input class="addInputBox" type="text" name="link" value="" placeholder="<iframe>....</iframe>"></input>
 
-        <button class="addVideo removeBoxes" onclick="displayBoxes()">-</button>
-        
+          <button type="submit" class="addVideo addButton">+</button>
+      
+      </form>
+
+          <button class="addVideo removeBoxes" onclick="displayBoxes()">-</button>
+          
+      </div>
+
     </div>
+
+    <a id="toLoginPage" href="login">login • </a>
+    <a id="toRegistrationPage" href="registration"> create page</a>
+
   </div>
 
-  <a id="toLoginPage" href="login">login • </a>
-  <a id="toRegistrationPage" href="registration"> create page</a>
+  <div class="centre">
+    <body>
 
-<body>
+      <form method="GET" action="/" id="deletionForm">
+      
+        <div class="tempPlaylist">{{{tempPlayList}}}</div>
+        <button class="removeButton" value="submit">remove video</button>
 
-  <form method="GET" action="/" id="deletionForm">
-  
-    <div class="tempPlaylist">{{{tempPlayList}}}</div>
-    <button class="removeButton" value="submit">remove video(s)</button>
+      </form>
 
-  </form>
-
-  <button class="sizing s" onclick="s()">s</button>
-  <button class="sizing m " onclick="m()">m</button>
-  <button class="sizing l" onclick="l()">l</button>
+      <button class="sizing s" onclick="s()">s</button>
+      <button class="sizing m " onclick="m()">m</button>
+      <button class="sizing l" onclick="l()">l</button>
 
 
-</body>
+    </body>
+  </div>
+
 </div>
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

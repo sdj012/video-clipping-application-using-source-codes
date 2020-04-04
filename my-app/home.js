@@ -27,7 +27,7 @@
       else element.style.opacity=0;
       
     };
-    console.log("displayBoxes hit")
+    // console.log("displayBoxes hit")
 
     return 0;
 
