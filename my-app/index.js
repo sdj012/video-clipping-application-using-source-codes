@@ -25,10 +25,10 @@ var loggedInUser;
 // call this function after the http server starts listening for requests
 
 function onHttpStart() {
-  // console.log("Express http server listening on: " + HTTP_PORT);
+  console.log("Express http server listening on: " + HTTP_PORT);
   db.connect(connectionString)
   .then(() => {
-    // console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB');
   })
   .catch((err) => {
     console.error(err);
