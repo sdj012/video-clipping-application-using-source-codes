@@ -1,3 +1,6 @@
 # dotenv
 *.env
 ../node_modules
+./instagram.png
+./note
+./TVGraphic.png
