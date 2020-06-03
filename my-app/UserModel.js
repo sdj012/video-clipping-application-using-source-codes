@@ -13,18 +13,20 @@ const UserSchema=mongoose.Schema({
     index:{unique:true},//ensures uniqueness
     minlength:3,
   },
+
   email:{
     type:String,
     required:false,
     trim:true, //removes trailing spaces
     lowercase:true,
-    index:{unique:true},//ensures uniqueness
+    index:{unique:false},//ensures uniqueness (changed to false - email abandoned)
     minlength:3,
     validate:{
       validator:emailValidator.validate,
       message: props=>`${props.value} is not a valid email address`
     },
   },
+
   password:{
     type:String,
     required:true,

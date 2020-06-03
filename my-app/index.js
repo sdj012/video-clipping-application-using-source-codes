@@ -185,11 +185,12 @@ app.post('/registration', async (req,res,next)=>{
   try{
 
     var user = {};
+
     user=new UserModel({
 
       username: req.body.username,
-      email:req.body.email,
       password:req.body.password,
+      email:req.body.email,
       videos:{},
 
     })
@@ -200,7 +201,8 @@ app.post('/registration', async (req,res,next)=>{
     if(savedUser)return res.redirect('/');
     return next(new Error('Failed to save user for unknown reasons'));
 
-  }catch(err){
+  } catch(err){
+    console.log(err);
     return next(err);
   }
 
