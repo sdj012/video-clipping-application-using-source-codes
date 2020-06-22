@@ -307,7 +307,7 @@ app.get('/home/:username',(req,res)=>{
         }
       }
 
-      res.render('home',{playlist:playlist, data:variable,layout:false});
+      res.render('home',{playlist:playlist, data:variable.toJSON(),layout:false});
     })
 
   } else {

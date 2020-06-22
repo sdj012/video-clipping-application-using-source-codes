@@ -133,13 +133,14 @@ input[type=text],input[type=password] {
   margin: 5px;
   width: 85%;
   border: 2px solid #f6f6f6;
+  border-radius: 20px 20px 20px 20px;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
+  /* -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px; */
 }
 
 input[type=text],input[type=password] :focus {
@@ -269,4 +270,9 @@ input[type=text],input[type=password] :placeholder {
 
 * {
   box-sizing: border-box;
+}
+
+.sizing{
+  background-color:grey;
+  border-radius: 20px 20px 20px 20px;
 }
