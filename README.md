@@ -1,3 +1,5 @@
+[![Watch the video](https://img.youtube.com/vi/Mgkkw2D4nRI/maxresdefault.jpg)](https://youtu.be/Mgkkw2D4nRI)
+
 # Introduction
 This application was created to provide a distraction-less space for streaming videos.
 It is able to render embed codes of videos from sources such as Youtube,V Live, or Dailymotion. 
