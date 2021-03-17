@@ -16,5 +16,5 @@ Middlewares: passport,body-parser,cookie-parser
 
 <img src="https://user-images.githubusercontent.com/49047379/111533760-88a1ec00-873d-11eb-9250-e4c86f5838e3.gif" width="500" height="auto" href="https://youtu.be/Mgkkw2D4nRI">
 
-Remove Videos using delete mode (-) 
+## Remove Videos using delete mode (-) 
 <a href="https://youtu.be/Mgkkw2D4nRI"><img src="https://img.youtube.com/vi/Mgkkw2D4nRI/maxresdefault.jpg" width="500" height="auto"></a>
