@@ -8,9 +8,14 @@ View Engine: Handlebars
 Libraries:CryptoJS
 Middlewares: passport,body-parser,cookie-parser
 
-Click the thumbnail to view a demo:
+## On Mobile
+
+<img src="https://user-images.githubusercontent.com/49047379/111533901-b6873080-873d-11eb-9ea3-206a68c4d2c2.gif" width="150" height="auto">
+
+## On Desktop
+
+<img src="https://user-images.githubusercontent.com/49047379/111533760-88a1ec00-873d-11eb-9250-e4c86f5838e3.gif" width="500" height="auto">
+
+(Click the thumbnail to view a demo)
 [![Watch the video](https://img.youtube.com/vi/Mgkkw2D4nRI/maxresdefault.jpg)](https://youtu.be/Mgkkw2D4nRI)
 
-![demo_embed_gif](https://user-images.githubusercontent.com/49047379/111533760-88a1ec00-873d-11eb-9250-e4c86f5838e3.gif)
-
-![resp_embed_demo](https://user-images.githubusercontent.com/49047379/111533901-b6873080-873d-11eb-9ea3-206a68c4d2c2.gif)
